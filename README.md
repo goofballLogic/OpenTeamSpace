@@ -1,1 +1,1 @@
-# OpenTeamSpace
+# Open Team Space
