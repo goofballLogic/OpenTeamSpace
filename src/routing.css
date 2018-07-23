@@ -1,0 +1,64 @@
+.routing-nav {
+
+    position: fixed;
+    z-index: 10;
+    width: var(--menu);
+    overflow: hidden;
+    left: var(--pad);
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    margin: -10px;
+
+}
+.routing-nav h1 {
+
+    margin: 0;
+    padding: 10px 10px 20px 10px;
+
+}
+.routing-link {
+
+    display: block;
+    padding: 10px;
+    font-size: 1.1em;
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 10pt;
+    color: black;
+
+}
+.routing-link + .routing-link {
+
+    margin-top: 10px;
+
+}
+
+.routing-nav-backwards .routing-link::before {
+
+    content: "⇦";
+    margin-right: 10px;
+
+}
+.routing-nav-forwards .routing-link::after {
+
+    content: "⇨";
+    float: right;
+
+}
+.routing-nav-backwards {
+
+    margin-bottom: 10px;
+
+}
+.routing-nav-secondary {
+
+    margin-top: 20px;
+
+}
+.routing-link:hover {
+
+    background-color: #CCC;
+
+}
