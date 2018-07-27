@@ -13,7 +13,7 @@ const locationView = ( url = new URL( location ) ) =>
 
 const selectRoute = url =>
     routes[ locationView( url ) ]
-    || (() => <div>Not found</div>);
+    || (() => <div>Not found: {locationView( url )}</div>);
 
 const selectMap = url =>
     routingMap[ locationView( url ) ]

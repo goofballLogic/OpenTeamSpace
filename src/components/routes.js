@@ -1,6 +1,7 @@
 import React from "react";
 import Home from "./Home";
 import Teams from "./Teams";
+import SelfTest from "./SelfTest";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -90,6 +91,7 @@ export default {
 
     [ HOME ]: Home,
     [ TEAMS ]: Teams,
+    [ SELF_TEST ]: SelfTest,
     [ UNMATCHED ]: () => <div>Not found.</div>
 
 }

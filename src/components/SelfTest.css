@@ -1,0 +1,110 @@
+.self-test {
+    
+    width: 100%;
+    
+}
+.team-editor-test .team-logo {
+    
+    width: 150px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+}
+.team-editor-test .team-details-editor {
+    
+    padding-right: 150px;
+    position: relative;
+    height: 200px;
+    
+    
+}
+.team-editor-test .team-name-editor {
+    
+    font-size: 2em;
+    border: none;
+    display: block;
+    
+}
+.team-editor-test .team-logo-editor {
+    
+    padding: 10px;
+    display: inline-block;
+    width: 100%;
+    
+}
+.team-editor-test .profile-card {
+    
+    border: solid 1px silver;
+    padding: 10px;
+    position: relative;
+    height: 140px;
+    padding-right: 140px;
+    margin: 10px 0;
+    
+}
+.team-editor-test .profile-card.selected {
+    
+    box-shadow: 0 0 30px 0px #07F;
+    
+}
+.team-editor-test .profile-blurb {
+    
+    display: inline-block;
+    vertical-align: top;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    
+}
+.team-editor-test h3 {
+    
+    border-bottom: solid 3px var(--profile-color);
+    margin: 0 0 10px 0;
+    line-height: 2;
+    
+}
+.team-editor-test .profile-avatar {
+
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--profile-color);
+    padding: 20px;
+    
+}
+.team-editor-test .profile-swatch {
+    
+    display: none;
+    
+}
+.team-editor-test .avatar-picker svg {
+            
+    width: 40px;
+    padding: 5px;
+    transition: all 0.3s;
+    border: solid 1px transparent;
+    
+}
+.team-editor-test .avatar-picker svg:hover {
+
+    background-color: white;
+    transform: scale(1.5);
+    border: solid 1px black;
+    
+}
+.team-editor-test .profile-color-swatch {
+    
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.team-editor-test .profile-avatar svg {
+    
+    width: 80px;
+    
+}
