@@ -12,6 +12,8 @@ export const USERS = "/teams/:teamid/progress/users";
 export const RECORD = "/teams/:teamid/progress/create";
 export const GOALS = "/teams/:teamid/progress/create/goals";
 
+export const SELF_TEST = "/self-test";
+
 export const map = {
 
     [ HOME ]: {
@@ -72,6 +74,12 @@ export const map = {
         name: "Goals",
         back: [ PROGRESS, RECORD ]
 
+    },
+    [ SELF_TEST ]: {
+        
+        name: "Self test",
+        back: [ HOME ]
+        
     }
 
 };

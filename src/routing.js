@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EventListener from "EventEmitter";
+import EventListener from "eventemitter3";
 
 import "./routing.css";
 import routes, { map as routingMap, HOME } from "./routes";
