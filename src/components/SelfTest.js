@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import TeamEditorTest from "../containers/TeamEditorTest";
 import "./SelfTest.css";
-
+import { enterValueInField } from "./test-utilities";
 
 const TeamEditorTestComponent = () => <section className="team-editor-test">
 
@@ -10,18 +10,10 @@ const TeamEditorTestComponent = () => <section className="team-editor-test">
 
 </section>;
 
-function setNativeValue(element, value) {
-  const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
-  const prototype = Object.getPrototypeOf(element);
-  const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
-  
-  if (valueSetter && valueSetter !== prototypeValueSetter) {
-  	prototypeValueSetter.call(element, value);
-  } else {
-    valueSetter.call(element, value);
-  }
-  const evt = new Event( "change", { bubbles: true } );
-  element.dispatchEvent( evt );
+function executeStep( step ) {
+    
+    try { step(); } catch( ex ) { return ex; }
+
 }
 
 const teamEditorSteps = [
@@ -29,17 +21,64 @@ const teamEditorSteps = [
     function populateTeamName() { 
         
         const nameInput = document.querySelector( ".team-editor-test .team-name-editor" );
-        setNativeValue( nameInput, "My team" );
-
+        enterValueInField( nameInput, "My team" );
+        
     }
     
 ];
+
 class SelfTest extends Component {
  
-    componentDidCatch( e ) {
+    constructor() {
         
-        console.error( "Caught", e );
+        super();
+        this.state = { errors: [] };
         
+    }
+    
+    recordError( err ) {
+        
+        if ( !err ) return;
+        const { lastStep, errors } = this.state;
+        errors.push( { step: lastStep, caught: err } );
+        this.setState( { errors } );
+        
+    }
+
+    componentDidMount() {
+        
+        const errorHandler = window.addEventListener( "error", e => { 
+        
+            e.preventDefault();
+            this.recordError( e.error );
+
+        }, true );
+        this.removeErrorHandler = () => window.removeEventListener( "error", errorHandler );
+        
+    }
+    
+    componentWillUnmount() {
+        
+        this.removeErrorHandler();
+        
+    }
+    
+    componentDidCatch( caught ) {
+        
+        this.recordError( caught );
+        
+    }
+    
+    executeStep( step ) {
+
+        this.setState( { lastStep: step } );
+        setTimeout( () => {
+            
+            const caught = executeStep( step );
+            if ( caught ) this.recordError( caught );
+            
+        }, 10 );
+
     }
     
     render() { 
@@ -49,10 +88,15 @@ class SelfTest extends Component {
             <h1>Self test page</h1>
             {teamEditorSteps.map( ( step, i ) => <div key={i}>
                 
-                <button onClick={() => step()}>Step {i} ( {step.name} )</button>
+                <button onClick={() => this.executeStep( step )}>Step {i} ( {step.name} )</button>
                 
             </div>)}
             <TeamEditorTestComponent />
+            {this.state.errors.map( ( e, i ) => console.log( e ) || <div key={i}>
+                <h4>Error</h4>
+                {Object.keys( e )}
+                
+            </div> )}
             
         </article>;
         
