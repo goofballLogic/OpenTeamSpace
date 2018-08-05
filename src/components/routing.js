@@ -34,9 +34,9 @@ function reNav( e ) {
     nav( e.target.href );
 
 }
-export const Link = ( { to, children } ) =>
+export const Link = ( { className, to, children } ) =>
 
-    <a onClick={e => reNav( e )} href={`?view=${to}`} className="routing-link">{children}</a>;
+    <a onClick={e => reNav( e )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>{children}</a>;
 
 export class Nav extends Component {
 

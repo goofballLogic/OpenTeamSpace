@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Router, UNMATCHED } from "./routing";
-
+import { Router, Link } from "./routing";
+import { SELF_TEST, map } from "./routes";
 import { Nav } from "./routing";
 import "./App.css";
 
@@ -15,7 +15,8 @@ class App extends Component {
 
                 <Nav />
                 <Router />
-
+                <Link className="self-test" to={ SELF_TEST }>{ map[ SELF_TEST ].name }</Link>
+                
             </div>
 
         );
