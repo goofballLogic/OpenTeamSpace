@@ -24,5 +24,11 @@ const Element = () => <Provider store={store}>
 </Provider>;
 
 
-ReactDOM.render( <Element />, document.getElementById('root'));
+ReactDOM.render( 
+    
+    <Element />, 
+    document.getElementById('root'),
+    () => document.body.classList.add( "app-initialized" )
+    
+);
 registerServiceWorker();

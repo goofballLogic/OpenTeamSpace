@@ -27,6 +27,7 @@ body {
   box-shadow: 0 0 30px 0;
   margin-bottom: calc(var(--pad) * 2);
   padding-bottom: var(--pad);
+  
 }
 p {
 

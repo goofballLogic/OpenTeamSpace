@@ -68,7 +68,7 @@ const teamEditorSteps = [
             const firstProfileCard = document.querySelector( ".team-editor-tests .profile-card" );
             firstProfileCard.click(); // select for editing
             const cardEditorForm = document.querySelector( ".team-editor-tests .profile-card-editor" );
-            enterValueInField( cardEditorForm.name, "Gabi" );
+            enterValueInField( cardEditorForm.name, "Bagi" );
             enterValueInField( cardEditorForm.blurb, "Used to be a good friend" );
             enterValueInField( cardEditorForm.colour, "#123456" );
             enterValueInField( cardEditorForm.avatar, "kangaroo" );
@@ -82,7 +82,7 @@ const teamEditorSteps = [
             const profileCardEditor = document.querySelector( ".team-editor-tests .profile-card-editor" );
             if ( profileCardEditor ) throw new Error( "Profile card editor did not disappear after deselecting the profile card" );
             const firstProfileCard = document.querySelector( ".team-editor-tests .profile-card" );
-            assertEqual( "Gabi", firstProfileCard.querySelector( ".profile-name" ).textContent, "profile name" );
+            assertEqual( "Bagi", firstProfileCard.querySelector( ".profile-name" ).textContent, "profile name" );
             assertEqual( "Used to be a good friend", firstProfileCard.querySelector( ".profile-blurb" ).textContent, "profile blurb" );
             assertEqual( "#123456", window.getComputedStyle( firstProfileCard ).getPropertyValue( "--profile-color" ).trim(), "profile color" );
             assertEqual( "ellipse", firstProfileCard.querySelector( ".profile-avatar" ).firstChild.firstChild.firstChild.tagName, "profile avatar" );

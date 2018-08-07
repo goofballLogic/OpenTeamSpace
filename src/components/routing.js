@@ -1,3 +1,4 @@
+/*global CustomEvent*/
 import React, { Component } from "react";
 import EventListener from "eventemitter3";
 
@@ -28,15 +29,16 @@ function nav( href ) {
 
 }
 
-function reNav( e ) {
+function reNav( e, name ) {
 
     e.preventDefault();
     nav( e.target.href );
+    document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
 
 }
-export const Link = ( { className, to, children } ) =>
+export const Link = ( { className, to, children, name } ) =>
 
-    <a onClick={e => reNav( e )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>{children}</a>;
+    <a onClick={e => reNav( e, name )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>{children}</a>;
 
 export class Nav extends Component {
 
@@ -69,23 +71,27 @@ export class Nav extends Component {
         const { url, className = "" } = this.props;
         const map = selectMap( url );
         const { back = [], forward = [], secondary = [] } = map;
-
+        const mapRoute = route => <Link key={ route } to={ route } name={ routingMap[ route ].name }>
+        
+            { routingMap[ route ].name }
+            
+        </Link>;
         return <nav className={`routing-nav ${className}`}>
 
             {back.length ? <div className="routing-nav-backwards">
 
-                {back.map( route => <Link key={ route } to={ route }>{ routingMap[ route ].name }</Link> )}
+                {back.map( mapRoute )}
 
             </div> : null}
             <h1>{map.name}</h1>
             {forward.length ? <div className="routing-nav-forwards">
 
-                {forward.map( route => <Link key={ route } to={ route }>{ routingMap[ route ].name }</Link> )}
+                {forward.map( mapRoute )}
 
             </div> : null}
             {secondary.length ? <div className="routing-nav-secondary">
 
-                {secondary.map( route => <Link key={ route } to={ route }>{ routingMap[ route ].name }</Link> )}
+                {secondary.map( mapRoute )}
 
             </div> : null}
 
