@@ -13,6 +13,7 @@ html {
   --menu: 370px;
   --left: calc(var(--menu) + var(--pad));
   --primary-color: #333;
+  --small-pad: 15px;
 
 }
 body {
@@ -27,6 +28,7 @@ body {
   box-shadow: 0 0 30px 0;
   margin-bottom: calc(var(--pad) * 2);
   padding-bottom: var(--pad);
+  padding-top: calc(var(--small-pad) * 2);
   
 }
 p {

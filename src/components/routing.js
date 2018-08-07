@@ -9,7 +9,7 @@ const { location, history, URL } = global;
 const linkEventListener = new EventListener();
 
 const locationView = ( url = new URL( location ) ) =>
-    url.searchParams.get( "view" )
+    decodeURIComponent( url.searchParams.get( "view" ) )
     || HOME;
 
 const selectRoute = url =>
@@ -22,20 +22,21 @@ const selectMap = url =>
 
 const ANIMATE_DURATION = 1;
 
-function nav( href ) {
+function nav( href, name ) {
 
     history.pushState( null, null, href );
     linkEventListener.emit( "link" );
-
+    document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
+    
 }
 
 function reNav( e, name ) {
 
     e.preventDefault();
-    nav( e.target.href );
-    document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
-
+    nav( e.target.href, name );
+    
 }
+
 export const Link = ( { className, to, children, name } ) =>
 
     <a onClick={e => reNav( e, name )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>{children}</a>;
@@ -149,7 +150,7 @@ export class Router extends Component {
     render() {
 
         const Component = selectRoute();
-        return <Component />;
+        return <Component nav={ nav } />;
 
     }
 

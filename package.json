@@ -2,7 +2,10 @@
   "name": "tmp",
   "version": "0.1.1",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "react-toastify": "^4.1.0",
+    "redux-thunk": "^2.3.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

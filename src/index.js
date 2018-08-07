@@ -1,19 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from "redux";
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import './index.css';
-import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
+import thunk from "redux-thunk";
+
+import "./index.css";
+import App from "./components/App";
+import registerServiceWorker from "./registerServiceWorker";
 
 import * as reducers from "./reducers/index";
 const initialState = {};
 const rootReducer = combineReducers( reducers );
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancers = composeEnhancers( applyMiddleware( thunk ) );
+
 const store = createStore( 
     
     rootReducer,
     initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    enhancers
 
 );
 
@@ -27,7 +33,7 @@ const Element = () => <Provider store={store}>
 ReactDOM.render( 
     
     <Element />, 
-    document.getElementById('root'),
+    document.getElementById("root"),
     () => document.body.classList.add( "app-initialized" )
     
 );

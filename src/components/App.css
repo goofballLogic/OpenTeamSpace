@@ -10,8 +10,41 @@
 .app a.self-test {
     
     position: fixed;
-    right: 0;
+    left: 0;
     bottom: 0;
+    margin: var(--small-pad);
     z-index: -1;
+    max-width: 200px;
     
+}
+.app header {
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 var(--small-pad);
+    height: calc(var(--small-pad) * 3);
+    width: 100%;
+    background-color: #EEE;
+    box-shadow: 0 0 30px -10px black;
+    display: flex;
+    align-items: center;
+
+}
+.app .storage-status {
+
+    flex: 1;
+
+}
+.app .toast .toast-body {
+    
+    font-weight: 300;
+    color: black;
+    line-height: 1.5;
+    padding: var(--small-pad);
+    
+}
+.app .toast .toast-progress {
+    
+    background: linear-gradient( to right, white, #92c9ff );
 }

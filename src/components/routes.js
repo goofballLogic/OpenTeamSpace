@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./Home";
+import Home from "../containers/Home";
 import Teams from "./Teams";
 import SelfTest from "./SelfTest";
 

@@ -1,2 +1,3 @@
 import testing from "./testing";
-export { testing };
+import storage from "./storage";
+export { testing, storage };
