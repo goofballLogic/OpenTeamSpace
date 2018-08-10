@@ -17,7 +17,7 @@
     max-width: 200px;
     
 }
-.app header {
+.app > header {
     
     position: fixed;
     top: 0;
@@ -44,7 +44,9 @@
     padding: var(--small-pad);
     
 }
+
 .app .toast .toast-progress {
     
-    background: linear-gradient( to right, white, #92c9ff );
+    background: linear-gradient( to left, white, #92c9ff );
+    
 }

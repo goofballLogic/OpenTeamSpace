@@ -1,7 +1,20 @@
 (function() {
 
-    window.dataLayer = window.dataLayer || [];
+    if ( window.env.isProduction ) {
 
+        window.Raven.config('https://96edcb58a47c4d238335926565f806a2@sentry.io/1258176').install();
+        
+    } else {
+        
+        window.addEventListener( "error", function( e ) {
+            
+            console.error( "Global error", e );
+            
+        } );
+        
+    }
+    window.dataLayer = window.dataLayer || [];
+    
     function gtag() {
 
         if (window.env.isProduction) {

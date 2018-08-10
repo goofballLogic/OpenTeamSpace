@@ -22,7 +22,7 @@
     "recharts": "^1.1.0",
     "redux": "^4.0.0",
     "tc2-react-good-bad-tracker": "0.0.5",
-    "tc2-react-simple-storage": "0.0.2",
+    "tc2-react-simple-storage": "0.2.1",
     "tc2-react-simple-teams": "0.1.2",
     "tc2-react-time-series-graph": "0.0.14"
   },

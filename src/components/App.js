@@ -16,7 +16,16 @@ class App extends Component {
 
            <div className="app">
 
-                <ToastContainer transition={ Flip } toastClassName="toast" bodyClassName="toast-body" autoClose={ 30000 } progressClassName="toast-progress" newestOnTop={ true } />
+                <ToastContainer 
+                
+                    transition={ Flip }
+                    toastClassName="toast"
+                    bodyClassName="toast-body"
+                    autoClose={ 15000 }
+                    progressClassName="toast-progress"
+                    newestOnTop={ true } 
+                
+                />
                 <header>
                 
                     <StorageStatus />
