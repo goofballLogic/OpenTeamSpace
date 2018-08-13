@@ -9,7 +9,7 @@ const mapStateToProps = ( { storage } ) => ( {
 const mapDispatchToProps = ( dispatch, { nav } ) => ( {
     
     changeContext: changes => dispatch( changeContext( changes ) ),
-    handleError: err => dispatch( resetContext( { err } ) )
+    handleError: err => dispatch( resetContext( { err } ) ),
     
 } );
 export default connect( mapStateToProps, mapDispatchToProps )( Storage );

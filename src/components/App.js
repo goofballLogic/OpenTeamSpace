@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Router, Link } from "./routing";
+import Router from "../containers/Router";
+import { Link } from "./routing";
 import { SELF_TEST, map } from "./routes";
 import { Nav } from "./routing";
 import StorageStatus from "../containers/StorageStatus";
@@ -21,7 +22,7 @@ class App extends Component {
                     transition={ Flip }
                     toastClassName="toast"
                     bodyClassName="toast-body"
-                    autoClose={ 15000 }
+                    autoClose={ 5000 }
                     progressClassName="toast-progress"
                     newestOnTop={ true } 
                 
@@ -32,7 +33,7 @@ class App extends Component {
     
                 </header>
                 <Nav />
-                <Router />
+                <Router {...this.props} />
                 <Link className="self-test" to={ SELF_TEST }>{ map[ SELF_TEST ].name }</Link>
                 
             </div>

@@ -2,13 +2,6 @@ import React, { Component } from "react";
 import "./Home.css";
 class Home extends Component {
     
-    componentDidMount() {
-        
-        const { requireStorage, storageContext } = this.props;
-        setTimeout( () => requireStorage( storageContext ), 1000 );
-        
-    }
-    
     render() {
         
         const { className } = this.props;

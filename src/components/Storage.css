@@ -1,0 +1,64 @@
+.storage h2 {
+    
+    font-size: 1em;
+    margin: 0;
+}
+.storage .saving header > h2,
+.storage .saving header > button {
+    
+    display: none;
+    
+}
+.storage .provider-chooser .providers {
+    
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+}
+.storage .provider-chooser .providers button {
+    
+    padding: var(--small-pad);
+    background-color: #EEE;
+    
+}
+.storage .provider-chooser .providers button:hover {
+    
+    box-shadow: 0 0 5px -1px black;
+    
+}
+.storage button {
+    
+    font-size: 1em;
+    
+}
+.storage .provider-name {
+    
+    display: flex;
+    align-items: center;
+    height: 2em;
+    
+}
+.storage .provider-name button {
+    
+    margin-left: 1em;
+    
+}
+.storage .controls,
+.storage .controls > span {
+    
+    display: flex;
+    height: 2em;
+    align-items: center;
+    
+}
+.storage .controls > button {
+    
+    margin-right: 1em;
+    
+}
+.storage .controls span button {
+    
+    margin-left: 1em;
+    
+}

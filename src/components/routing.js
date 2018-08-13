@@ -2,8 +2,10 @@
 import React, { Component } from "react";
 import EventListener from "eventemitter3";
 
+import { toast } from "react-toastify";
+
 import "./routing.css";
-import routes, { map as routingMap, HOME } from "./routes";
+import route, { map as routingMap, HOME, STORAGE } from "./routes";
 
 const { location, history, URL } = global;
 const linkEventListener = new EventListener();
@@ -12,11 +14,9 @@ const locationView = ( url = new URL( location ) ) =>
     decodeURIComponent( url.searchParams.get( "view" ) )
     || HOME;
 
-const selectRoute = url =>
-    routes[ locationView( url ) ]
-    || (() => <div>Not found: {locationView( url )}</div>);
+const selectRoute = ( props, url ) => route( locationView( url ), props );
 
-const selectMap = url =>
+const selectMap = url => 
     routingMap[ locationView( url ) ]
     || {};
 
@@ -35,6 +35,38 @@ function reNav( e, name ) {
     e.preventDefault();
     nav( e.target.href, name );
     
+}
+
+export function maybeAuthorizeStorageRequirement( props ) {
+    
+    const { storage = {} } = props;
+    const { context = {} } = storage;
+    const isReady = context && context.connected;
+    if ( !isReady ) return;
+    const url = new URL( window.locaiton.href );
+    const target = url.searchParams.get( "target" );
+    if ( !target ) return;
+    url.searchParams.delete( "target" );
+    url.searchParams.set( "view", target );
+    nav( url.toString(), "Back" );
+    
+}
+
+export function requireStorageContext( props ) {
+    
+    const { storage = {} } = props;
+    const { context = {} } = storage;
+    const isReady = context && context.connected && context.selectedFolder;
+    if ( isReady ) return true;
+    toast( "Please sign in so that we know where to store your data." );
+    const route = routingMap[ STORAGE ];
+    const url = new URL( window.location.href );
+    if ( !url.searchParams.get( "target" ) )
+         url.searchParams.set( "target", url.searchParams.get( "view" ) );
+    url.searchParams.set( "view", STORAGE );
+    nav( url.toString(), route.name );
+    return false;
+
 }
 
 export const Link = ( { className, to, children, name } ) =>
@@ -149,7 +181,7 @@ export class Router extends Component {
 
     render() {
 
-        const Component = selectRoute();
+        const Component = selectRoute( this.props );
         return <Component nav={ nav } />;
 
     }

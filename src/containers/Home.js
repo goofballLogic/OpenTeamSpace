@@ -5,7 +5,7 @@ import { requireStorage } from "../actions/storage";
 const mapStateToProps = ( { storage } ) => ( { storageContext: storage.context } );
 const mapDispatchToProps = ( dispatch, { nav } ) => ( { 
     
-    requireStorage: storageContext => requireStorage( { nav, storageContext } )
+    requireStorage: storageContext => dispatch( requireStorage( { storageContext } ) )
     
 } );
 

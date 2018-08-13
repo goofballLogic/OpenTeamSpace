@@ -1,5 +1,8 @@
 import React from "react";
-import Home from "../containers/Home";
+
+import { requireStorageContext, maybeAuthorizeStorageRequirement } from "./routing";
+
+import Home from "./Home";
 import Teams from "./Teams";
 import SelfTest from "./SelfTest";
 import Storage from "../containers/Storage";
@@ -21,18 +24,37 @@ export const map = {
     [ HOME ]: {
 
         name: "Home",
+        component: Home,
+        authorize: ( props ) => {
+            
+            setTimeout( () => {
+                
+                requireStorageContext( props );
+                
+            }, 3000 );
+            return true;
+            
+        },
         forward: [ STORAGE, TEAMS ],
 
     },
     [ STORAGE ]: {
 
         name: "Select storage",
+        component: Storage,
+        authorize: ( props ) => {
+            
+            maybeAuthorizeStorageRequirement( props );
+            return true;
+            
+        },
         back: [ HOME ]
 
     },
     [ TEAMS ]: {
 
         name: "Select team",
+        component: Teams,
         back: [ HOME ],
         forward: [ CREATE_TEAM, PROGRESS ]
 
@@ -80,6 +102,8 @@ export const map = {
     [ SELF_TEST ]: {
         
         name: "Self test",
+        component: SelfTest,
+        authorize: () => true,
         back: [ HOME ]
         
     }
@@ -88,12 +112,20 @@ export const map = {
 
 export const UNMATCHED = Symbol( "unmatched route" );
 
-export default {
+const UnmatchedRouting = {
+    
+    component: () => () => <div>Not found.</div>
+    
+};
 
-    [ HOME ]: Home,
-    [ TEAMS ]: Teams,
-    [ SELF_TEST ]: SelfTest,
-    [ STORAGE ]: Storage,
-    [ UNMATCHED ]: () => <div>Not found.</div>
-
+export default function RouteComponent( route, props ) {
+    
+    const routing = map[ route ] || UnmatchedRouting;
+    const component = routing.component;
+    if ( !component ) { throw new Error( `Route has no component: ${route}` ); }
+    const authorize = routing.authorize || requireStorageContext;
+    return authorize( props )
+        ? component
+        : () => <div className="access-denied">Access denied</div>;
+    
 }
