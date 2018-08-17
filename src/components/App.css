@@ -38,15 +38,28 @@
 }
 .app .storage-status .connection {
     
-    margin-left: 0.5em;
+    margin: 0 0.5em;
+    width: 150px;
+    display: inline-block;
+    text-align: center;
     padding: 0.4em 0.8em;
     background-color: rgba( 0, 0, 0, 0.1 );
     
 }
+.app .storage-status .connection.connected {
+    
+    background: radial-gradient(white, #AFA);
+    
+}
 .app .storage-status .provider-name::before {
     
-    content: " using ";
+    content: " ";
 
+}
+.app .storage-status .selected-folder::before {
+    
+    content: ": ";
+    
 }
 .app .toast .toast-body {
     

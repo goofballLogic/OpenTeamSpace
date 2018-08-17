@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Router from "../containers/Router";
 import { Link } from "./routing";
 import { SELF_TEST, map } from "./routes";
-import { Nav } from "./routing";
+import Nav from "../containers/Nav";
 import StorageStatus from "../containers/StorageStatus";
 import "./App.css";
 
@@ -32,7 +32,7 @@ class App extends Component {
                     <StorageStatus />
     
                 </header>
-                <Nav />
+                <Nav {...this.props} />
                 <Router {...this.props} />
                 <Link className="self-test" to={ SELF_TEST }>{ map[ SELF_TEST ].name }</Link>
                 

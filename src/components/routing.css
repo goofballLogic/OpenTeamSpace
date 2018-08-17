@@ -17,7 +17,7 @@
     padding: 10px 10px 20px 10px;
 
 }
-.routing-link {
+.routing-nav .routing-link {
 
     display: block;
     padding: 10px;
@@ -29,12 +29,21 @@
     color: black;
 
 }
-.routing-link + .routing-link {
+.routing-nav .routing-link-disabled {
+    
+    color: silver;
+    
+}
+.routing-nav .routing-link + .routing-link {
 
     margin-top: 10px;
 
 }
+.routing-nav .routing-link:hover:not(.routing-link-disabled) {
 
+    background-color: #CCC;
+
+}
 .routing-nav-backwards .routing-link::before {
 
     content: "⇦";
@@ -55,10 +64,5 @@
 .routing-nav-secondary {
 
     margin-top: 20px;
-
-}
-.routing-link:hover {
-
-    background-color: #CCC;
 
 }

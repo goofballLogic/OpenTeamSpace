@@ -1,11 +1,10 @@
 import React from "react";
 
-import { requireStorageContext, maybeAuthorizeStorageRequirement } from "./routing";
-
 import Home from "./Home";
 import Teams from "./Teams";
 import SelfTest from "./SelfTest";
 import Storage from "../containers/Storage";
+import AccessDenied from "./AccessDenied";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -19,22 +18,26 @@ export const GOALS = "/teams/:teamid/progress/create/goals";
 
 export const SELF_TEST = "/self-test";
 
+function requireStorageContext( props ) {
+    
+    const { context = {} } = props.storage;
+    const authorized = context && context.connected;
+    return { 
+        
+        authorized,
+        message: "You need to connect to a data store before accessing this page.",
+        redirect: STORAGE
+        
+    };
+
+}
+
 export const map = {
 
     [ HOME ]: {
 
         name: "Home",
         component: Home,
-        authorize: ( props ) => {
-            
-            setTimeout( () => {
-                
-                requireStorageContext( props );
-                
-            }, 3000 );
-            return true;
-            
-        },
         forward: [ STORAGE, TEAMS ],
 
     },
@@ -42,12 +45,6 @@ export const map = {
 
         name: "Select storage",
         component: Storage,
-        authorize: ( props ) => {
-            
-            maybeAuthorizeStorageRequirement( props );
-            return true;
-            
-        },
         back: [ HOME ]
 
     },
@@ -55,6 +52,7 @@ export const map = {
 
         name: "Select team",
         component: Teams,
+        authorize: [ requireStorageContext ],
         back: [ HOME ],
         forward: [ CREATE_TEAM, PROGRESS ]
 
@@ -62,18 +60,21 @@ export const map = {
     [ CREATE_TEAM ]: {
 
         name: "Create a team",
+        authorize: [ requireStorageContext ],
         back: [ TEAMS ]
 
     },
     [ EDIT_TEAM ]: {
 
         name: "Edit team",
+        authorize: [ requireStorageContext ],
         back: [ TEAMS, RECORD ]
 
     },
     [ PROGRESS ]: {
 
         name: "View progress",
+        authorize: [ requireStorageContext ],
         back: [ TEAMS ],
         forward: [ RECORD, USERS ],
         secondary: [ GOALS ]
@@ -82,12 +83,14 @@ export const map = {
     [ USERS ]: {
 
         name: "Edit team users",
+        authorize: [ requireStorageContext ],
         back: [ PROGRESS, RECORD ],
 
     },
     [ RECORD ]: {
 
         name: "Record an assessment",
+        authorize: [ requireStorageContext ],
         back: [ PROGRESS ],
         forward: [ GOALS ],
         secondary: [ USERS ]
@@ -96,6 +99,7 @@ export const map = {
     [ GOALS ]: {
 
         name: "Goals",
+        authorize: [ requireStorageContext ],
         back: [ PROGRESS, RECORD ]
 
     },
@@ -118,14 +122,35 @@ const UnmatchedRouting = {
     
 };
 
-export default function RouteComponent( route, props ) {
+function findUnauthorized( rules, props ) {
+    
+    for( const rule of rules ) {
+        
+        const result = rule( props );
+console.log( props, result );
+        if ( !result.authorized ) return result;
+        
+    }
+    
+}
+
+export function isAuthorized( route, props ) {
+    
+    const routing = map[ route ] || UnmatchedRouting;
+    const rules = routing.authorize || [];
+    return !findUnauthorized( rules, props );
+    
+}
+
+export default function findComponent( route, props ) {
     
     const routing = map[ route ] || UnmatchedRouting;
     const component = routing.component;
     if ( !component ) { throw new Error( `Route has no component: ${route}` ); }
-    const authorize = routing.authorize || requireStorageContext;
-    return authorize( props )
-        ? component
-        : () => <div className="access-denied">Access denied</div>;
-    
+    const rules = routing.authorize || [];
+    const denied = findUnauthorized( rules, props );
+    return denied
+        ? () => <AccessDenied {...denied} />
+        : component;
+
 }

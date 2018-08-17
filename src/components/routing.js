@@ -2,23 +2,23 @@
 import React, { Component } from "react";
 import EventListener from "eventemitter3";
 
-import { toast } from "react-toastify";
-
 import "./routing.css";
-import route, { map as routingMap, HOME, STORAGE } from "./routes";
+import route, { map as routingMap, HOME, STORAGE, isAuthorized } from "./routes";
 
 const { location, history, URL } = global;
 const linkEventListener = new EventListener();
 
-const locationView = ( url = new URL( location ) ) =>
-    decodeURIComponent( url.searchParams.get( "view" ) )
-    || HOME;
+const locationView = 
+    ( url = new URL( location ) ) =>
+        decodeURIComponent( url.searchParams.get( "view" ) ) || HOME;
 
-const selectRoute = ( props, url ) => route( locationView( url ), props );
+const selectRoute = 
+    ( props, url ) => 
+        route( locationView( url ), props );
 
-const selectMap = url => 
-    routingMap[ locationView( url ) ]
-    || {};
+const selectMap = 
+    url => 
+        routingMap[ locationView( url ) ] || {};
 
 const ANIMATE_DURATION = 1;
 
@@ -37,65 +37,57 @@ function reNav( e, name ) {
     
 }
 
-export function maybeAuthorizeStorageRequirement( props ) {
+const DisabledLink = ( { className, children } ) =>
+
+    <span className={`routing-link routing-link-disabled ${className || ""}`}>
+        
+        {children}
+        
+    </span>
     
-    const { storage = {} } = props;
-    const { context = {} } = storage;
-    const isReady = context && context.connected;
-    if ( !isReady ) return;
-    const url = new URL( window.locaiton.href );
-    const target = url.searchParams.get( "target" );
-    if ( !target ) return;
-    url.searchParams.delete( "target" );
-    url.searchParams.set( "view", target );
-    nav( url.toString(), "Back" );
+;
+
+const EnabledLink = ( { name, to, className, children } ) =>
+
+    <a onClick={e => reNav( e, name )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>
     
-}
-
-export function requireStorageContext( props ) {
+        {children}
     
-    const { storage = {} } = props;
-    const { context = {} } = storage;
-    const isReady = context && context.connected && context.selectedFolder;
-    if ( isReady ) return true;
-    toast( "Please sign in so that we know where to store your data." );
-    const route = routingMap[ STORAGE ];
-    const url = new URL( window.location.href );
-    if ( !url.searchParams.get( "target" ) )
-         url.searchParams.set( "target", url.searchParams.get( "view" ) );
-    url.searchParams.set( "view", STORAGE );
-    nav( url.toString(), route.name );
-    return false;
+    </a>
+    
+;
 
-}
+export const Link = 
+    props =>
+        props.disabled ? <DisabledLink {...props} /> : <EnabledLink {...props} />;
 
-export const Link = ( { className, to, children, name } ) =>
+const mapRoute = props => route => 
 
-    <a onClick={e => reNav( e, name )} href={`?view=${to}`} className={`routing-link ${className || ""}`}>{children}</a>;
+    <Link disabled={!isAuthorized( route, props )} key={ route } to={ route } name={ routingMap[ route ].name }>
+        
+        { routingMap[ route ].name }
+            
+    </Link>
+
+;
 
 export class Nav extends Component {
-
-    constructor() {
-
-        super();
-        this.listener = this.listener.bind( this );
-
-    }
 
     listener() {
 
         this.setState( { href: location.href } );
 
     }
+
     componentDidMount() {
 
-        linkEventListener.on( "link-complete", this.listener );
+        linkEventListener.on( "link-complete", () => this.listener() );
 
     }
 
     componentWillUnmount() {
 
-        linkEventListener.off( "link-complete", this.listener );
+        linkEventListener.off( "link-complete", () => this.listener() );
 
     }
 
@@ -104,27 +96,23 @@ export class Nav extends Component {
         const { url, className = "" } = this.props;
         const map = selectMap( url );
         const { back = [], forward = [], secondary = [] } = map;
-        const mapRoute = route => <Link key={ route } to={ route } name={ routingMap[ route ].name }>
-        
-            { routingMap[ route ].name }
-            
-        </Link>;
+        const linkBuilder = mapRoute( this.props );
         return <nav className={`routing-nav ${className}`}>
 
             {back.length ? <div className="routing-nav-backwards">
 
-                {back.map( mapRoute )}
+                {back.map( linkBuilder )}
 
             </div> : null}
             <h1>{map.name}</h1>
             {forward.length ? <div className="routing-nav-forwards">
 
-                {forward.map( mapRoute )}
+                {forward.map( linkBuilder )}
 
             </div> : null}
             {secondary.length ? <div className="routing-nav-secondary">
 
-                {secondary.map( mapRoute )}
+                {secondary.map( linkBuilder )}
 
             </div> : null}
 
@@ -140,6 +128,7 @@ export class Router extends Component {
 
         super();
         this.listener = this.listener.bind( this );
+        this.state = {};
 
     }
 
@@ -165,6 +154,13 @@ export class Router extends Component {
 
     }
 
+    componentDidCatch( ex ) {
+        
+        window.dispatchEvent( new CustomEvent( "caught-error", { detail: ex } ) );
+        this.setState( { error: ex } );
+
+    }
+    
     componentDidMount() {
 
         linkEventListener.on( "link", this.listener );
@@ -179,10 +175,42 @@ export class Router extends Component {
 
     }
 
+    goBack() {
+        
+        this.setState( { error: null } );
+        history.back();
+        
+    }
+    
+    renderError( ex ) {
+        
+        return <article className="error">
+            
+            <h1>An error occurred</h1>
+            <pre>{ ex.message }</pre>
+            <p><button onClick={() => this.goBack()}>Go back</button></p>
+            
+        </article>;
+        
+    }
+    
     render() {
 
-        const Component = selectRoute( this.props );
-        return <Component nav={ nav } />;
+        if ( this.state.error ) {
+            
+            return this.renderError( this.state.error );
+            
+        }
+        try {
+
+            const Component = selectRoute( this.props );
+            return <Component nav={ nav } />;
+            
+        } catch( ex ) {
+            
+            return this.renderError( ex );
+            
+        }
 
     }
 

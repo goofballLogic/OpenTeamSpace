@@ -1,27 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import { Saving } from "tc2-react-simple-storage";
 import "./Storage.css";
 
-const FolderSelected = ( { storageContext } ) => 
-console.log( storageContext ) || 
+
+const FolderSelected = ( { context, cancelContext } ) =>
 
     <div>
     
-        Selected folder: { storageContext.selectedFolder.current.name }
-        
+        { context.connecting
+            ? <h2>Waiting for data store connection</h2>
+            : <h2>Data store connected</h2> }
+            
+        <button onClick={ cancelContext }>{ context.connecting ? "Cancel" : "Disconnect" }</button>
+
     </div>
     
 ;
+        
 
-const SelectFolder = ( { storageContext = {}, changeContext, handleError } ) => 
+const SelectFolder = ( { context = {}, changeContext, handleError } ) => 
 
     <div>
     
-        { storageContext.provider 
+        { context.provider 
             ? <h2>Selected data store:</h2> 
             : <h2>Choose a data store:</h2> }
         <Saving 
-            context={ storageContext } 
+            context={ context } 
             onContextChange={ changeContext } 
             onError={ handleError } />
     
@@ -29,13 +34,14 @@ const SelectFolder = ( { storageContext = {}, changeContext, handleError } ) =>
 
 ;
  
-const Storage = ( props ) =>
+const Storage = props =>
 
     <article className="storage">
         
-        { props.storageContext && props.storageContext.selectedFolder
-            ? <FolderSelected {...props} />
-            : <SelectFolder {...props} /> }
+        { props.context 
+            && ( props.context.connected || props.context.connecting ) 
+            && <FolderSelected {...props} /> }
+        <SelectFolder {...props} />
                 
     </article>
 
