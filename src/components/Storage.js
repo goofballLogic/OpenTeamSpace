@@ -2,46 +2,50 @@ import React from "react";
 import { Saving } from "tc2-react-simple-storage";
 import "./Storage.css";
 
+const titleForContext = 
+    ( { connected, connecting } ) => 
+        connected ? "Data store connected" : connecting ? "Connecting..." : "Select a data folder";
 
-const FolderSelected = ( { context, cancelContext } ) =>
-
-    <div>
-    
-        { context.connecting
-            ? <h2>Waiting for data store connection</h2>
-            : <h2>Data store connected</h2> }
-            
-        <button onClick={ cancelContext }>{ context.connecting ? "Cancel" : "Disconnect" }</button>
-
-    </div>
-    
-;
+const CancelButton = 
+    ( { connected, connecting, cancelContext } ) => 
+        ( connected || connecting ) 
+            ? <button onClick={ cancelContext }>{ connected ? "Disconnect" : "Cancel" }</button>
+            : null;
         
-
-const SelectFolder = ( { context = {}, changeContext, handleError } ) => 
-
-    <div>
-    
-        { context.provider 
-            ? <h2>Selected data store:</h2> 
-            : <h2>Choose a data store:</h2> }
-        <Saving 
-            context={ context } 
-            onContextChange={ changeContext } 
-            onError={ handleError } />
-    
-    </div>
-
-;
- 
-const Storage = props =>
+const Storage = ( { context = {}, cancelContext, changeContext, handleError } ) =>
 
     <article className="storage">
+
+        <header>
         
-        { props.context 
-            && ( props.context.connected || props.context.connecting ) 
-            && <FolderSelected {...props} /> }
-        <SelectFolder {...props} />
+            <h2>{ titleForContext( context ) }</h2>
+            { context.provider ? null : <p>
+                In order to persist your data, you need to connect to a storage account such as your Google Drive or OneDrive account.
+                The location you select should be an empty folder where your data can be persisted without overwriting other files.
+                A metadata file named <code>index.json</code> will be generated, identifying OTS when you reconnect in the future.
+            </p> }
+            
+        </header>
+        
+        { !context.connected ? null : <p>
+        
+            You are connected to the data folder you selected: <code>{context.connected.path().join( "/")}</code>.
+            OTS will create and update files in this folder with the data you generate while using the system.
+            If you want to disconnect from this folder you can use the button below:
+            
+        </p> }
+        <CancelButton {...context} cancelContext={ cancelContext } />
+        { !context.connected ? null : <header className="change-folder">
+        
+            <h2>Change folder</h2>
+            <p>
+                
+                You can select a new folder below. Note that this will disconnect you from your currently connected folder.
+                
+            </p>
+
+        </header> }
+        <Saving context={ context } onContextChange={ changeContext } onError={ handleError } />
                 
     </article>
 

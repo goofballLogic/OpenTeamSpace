@@ -127,7 +127,6 @@ function findUnauthorized( rules, props ) {
     for( const rule of rules ) {
         
         const result = rule( props );
-console.log( props, result );
         if ( !result.authorized ) return result;
         
     }

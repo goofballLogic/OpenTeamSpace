@@ -1,7 +1,7 @@
-.storage h2 {
+.storage .saving {
     
-    font-size: 1em;
-    margin: 0;
+    position: relative;
+    
 }
 .storage .saving header > h2,
 .storage .saving header > button {
@@ -60,5 +60,137 @@
 .storage .controls span button {
     
     margin-left: 1em;
+    
+}
+.storage {
+    
+    width: 100%;
+    
+}
+.storage header h2 {
+    
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 100;
+    border-bottom: solid 1px black;
+    padding-bottom: var(--small-pad);
+    margin-bottom: var(--small-pad);
+    
+}
+.storage .folder-list-folder {
+    
+    background-color: #EEE;
+    width: 100%;
+    padding: calc(var(--small-pad) / 2);
+    margin-bottom: calc(var(--small-pad) / 2);
+    
+}
+.storage header.change-folder {
+    
+    margin-top: calc(var(--small-pad) * 2 );
+    
+}
+.storage .selected-provider {
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2em auto;
+    
+}
+.storage .folder-list-loading {
+    
+    position: absolute;
+    background-color: white;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 50vh;
+    font-size: 3em;
+}
+.storage .selected-provider .controls {
+    
+    grid-column: 1 / 3;
+    
+}
+.storage .selected-provider .folder-browsers {
+    
+    margin-top: var(--small-pad);
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    margin-right: var(--small-pad);
+    
+}
+.storage .selected-provider .selected-folder {
+    
+    margin: var(--small-pad) var(--small-pad) 0 0;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    border: solid 1px var(--primary-color);
+    padding: var(--small-pad);
+    height: 500px;
+    
+}
+.storage .selected-provider .selected-folder h2 {
+    
+    font-size: 1em;
+    background-color: var(--primary-color);
+    margin: calc(var(--small-pad) * -1);
+    margin-bottom: 0;
+    padding: var(--small-pad);
+    color: white;
+    
+}
+.storage .selected-provider .selected-folder {
+    
+    line-height: 1.5;
+    
+}
+.storage .selected-provider .selected-folder h3 {
+    
+    margin-bottom: 0;
+    
+}
+.storage .selected-provider .folder-browsers button {
+    
+    border: none;
+    text-align: left;
+    flex: 1;
+    outline: none;
+    
+}
+.storage .selected-provider button:focus {
+    
+    background-color: #EEE;
+    box-shadow: 0 0 1px 1px silver;
+
+    
+}
+.storage .selected-provider ul.folder-list {
+    
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    max-height: 0px;
+    overflow-y: auto;
+    background-color: white;
+    transition: all 0.5s;
+    
+}
+.storage .selected-provider .selected ul.folder-list {
+    
+    max-height: 50vh;
+
+}
+.storage .selected-provider ul.folder-list li {
+    
+    display: flex;
+    
+}
+.storage .folder-list button::before {
+    
+    content: "📁 ";
     
 }
