@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import Storage from "../components/Storage";
+import Storage from "../components/nodes/Storage";
 import { resetContext, changeContext } from "../actions/storage";
 
-const mapStateToProps = ( { storage } ) => ( { context: storage.context } );
+const mapStateToProps = ( { storage } ) => ( { storage, context: storage.context } );
 
 const mapDispatchToProps = ( dispatch, { nav } ) => ( {
     

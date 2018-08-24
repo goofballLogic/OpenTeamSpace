@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import TeamEditorTest from "../containers/TeamEditorTest";
+import TeamEditorTest from "../../containers/TeamEditorTest";
 import "./SelfTest.css";
-import { enterValueInField } from "./test-utilities";
+import { enterValueInField } from "../test-utilities";
 
 
 function executeStep( step ) {

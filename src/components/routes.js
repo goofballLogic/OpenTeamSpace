@@ -1,10 +1,12 @@
+/*global URL*/
 import React from "react";
 
-import Home from "./Home";
-import Teams from "./Teams";
-import SelfTest from "./SelfTest";
+import Home from "./nodes/Home";
+import Teams from "./nodes/Teams";
+import SelfTest from "./nodes/SelfTest";
 import Storage from "../containers/Storage";
-import AccessDenied from "./AccessDenied";
+import AccessDenied from "./nodes/AccessDenied";
+import CreateTeam from "../containers/CreateTeam";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -18,7 +20,7 @@ export const GOALS = "/teams/:teamid/progress/create/goals";
 
 export const SELF_TEST = "/self-test";
 
-function requireStorageContext( props ) {
+function requireStorageContext( route, props ) {
     
     const { context = {} } = props.storage;
     const authorized = context && context.connected;
@@ -26,7 +28,8 @@ function requireStorageContext( props ) {
         
         authorized,
         message: "You need to connect to a data store before accessing this page.",
-        redirect: STORAGE
+        redirect: STORAGE,
+        redirectFrom: route
         
     };
 
@@ -60,6 +63,7 @@ export const map = {
     [ CREATE_TEAM ]: {
 
         name: "Create a team",
+        component: CreateTeam,
         authorize: [ requireStorageContext ],
         back: [ TEAMS ]
 
@@ -122,11 +126,11 @@ const UnmatchedRouting = {
     
 };
 
-function findUnauthorized( rules, props ) {
+function findUnauthorized( rules, route, props ) {
     
     for( const rule of rules ) {
         
-        const result = rule( props );
+        const result = rule( route, props );
         if ( !result.authorized ) return result;
         
     }
@@ -137,7 +141,7 @@ export function isAuthorized( route, props ) {
     
     const routing = map[ route ] || UnmatchedRouting;
     const rules = routing.authorize || [];
-    return !findUnauthorized( rules, props );
+    return !findUnauthorized( rules, null, props );
     
 }
 
@@ -147,7 +151,7 @@ export default function findComponent( route, props ) {
     const component = routing.component;
     if ( !component ) { throw new Error( `Route has no component: ${route}` ); }
     const rules = routing.authorize || [];
-    const denied = findUnauthorized( rules, props );
+    const denied = findUnauthorized( rules, route, props );
     return denied
         ? () => <AccessDenied {...denied} />
         : component;
