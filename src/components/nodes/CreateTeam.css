@@ -1,0 +1,99 @@
+.create-team {
+    
+    width: 100%;
+    
+}
+.create-team form {
+    
+    max-width: 800px;
+    padding: 10px;
+    position: relative;
+    
+}
+.create-team form label {
+    
+    display: block;
+    border-bottom: solid 1px silver;
+    margin-bottom: 1em;
+    padding-bottom: 0.25em;
+    display: flex;
+    
+}
+.create-team form .creating-message {
+    
+    font-size: 3rem;
+    background-color: rgba( 255, 255, 255, 0.7 );
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    text-align: center;
+    line-height: 10rem;
+    
+}
+.create-team form .label-text {
+    
+    flex-basis: auto;
+    width: 15%;
+    max-width: 120px;
+    min-width: 100px;
+    display: inline-block;
+    padding: 0.5em;
+    
+}
+.create-team form input {
+    
+    flex: 1;
+    padding: 0.5em;
+    font-size: 1rem;
+    border: none;
+    
+}
+.create-team .logo {
+    
+    margin: var(--half-pad) auto;
+    box-shadow: 0 0 10px -3px black;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+
+}
+.create-team .logo img {
+    
+    max-width: 200px;
+    max-height: 200px;
+
+}
+.create-team .logo figcaption {
+    
+    margin-top: 25px;
+    font-style: italic;
+
+}
+.create-team form button {
+    
+    font-size: 1rem;
+    padding: 1rem;
+    min-width: 300px;
+    border-radius: 5px;
+    
+}
+.create-team .error-message {
+    
+    background-color: #FEE;
+    border: solid 1px red;
+    padding: var(--small-pad);
+    margin-top: var(--small-pad);
+    font-style: italic;
+    
+}
+.create-team .error-message h3 {
+    
+    margin: 0;
+    font-style: normal;
+    
+}

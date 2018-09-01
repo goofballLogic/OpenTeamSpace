@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Router from "../containers/Router";
 import { Link } from "./routing";
-import { SELF_TEST, map } from "./routes";
+import { SELF_TEST, HOME, map } from "./routes";
 import Nav from "../containers/Nav";
 import StorageStatus from "../containers/StorageStatus";
 import "./App.css";
+
+import { hot } from 'react-hot-loader'
 
 import { Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -29,6 +31,11 @@ class App extends Component {
                 />
                 <header>
                 
+                    <Link className="home" to={ HOME }>
+                    
+                        <img src="/logo-small-transparent.png" />
+                    
+                    </Link>
                     <StorageStatus />
     
                 </header>
@@ -44,4 +51,4 @@ class App extends Component {
     
 }
 
-export default App;
+export default hot( module )( App );

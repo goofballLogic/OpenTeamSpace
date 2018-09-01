@@ -2,7 +2,7 @@
 import React from "react";
 
 import Home from "./nodes/Home";
-import Teams from "./nodes/Teams";
+import Teams from "../containers/Teams";
 import SelfTest from "./nodes/SelfTest";
 import Storage from "../containers/Storage";
 import AccessDenied from "./nodes/AccessDenied";
@@ -33,6 +33,21 @@ function requireStorageContext( route, props ) {
         
     };
 
+}
+
+function requireTeamSelection( route, props ) {
+    
+    const { selected } = props.teams;
+    const authorized = !!selected;
+    return {
+        
+        authorized,
+        message: "You need to choose a team before accessing this page.",
+        redirect: TEAMS,
+        redirectFrom: route
+        
+    };
+    
 }
 
 export const map = {
@@ -71,14 +86,14 @@ export const map = {
     [ EDIT_TEAM ]: {
 
         name: "Edit team",
-        authorize: [ requireStorageContext ],
+        authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ TEAMS, RECORD ]
 
     },
     [ PROGRESS ]: {
 
         name: "View progress",
-        authorize: [ requireStorageContext ],
+        authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ TEAMS ],
         forward: [ RECORD, USERS ],
         secondary: [ GOALS ]
@@ -87,14 +102,14 @@ export const map = {
     [ USERS ]: {
 
         name: "Edit team users",
-        authorize: [ requireStorageContext ],
+        authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS, RECORD ],
 
     },
     [ RECORD ]: {
 
         name: "Record an assessment",
-        authorize: [ requireStorageContext ],
+        authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS ],
         forward: [ GOALS ],
         secondary: [ USERS ]
@@ -103,7 +118,7 @@ export const map = {
     [ GOALS ]: {
 
         name: "Goals",
-        authorize: [ requireStorageContext ],
+        authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS, RECORD ]
 
     },
@@ -111,7 +126,7 @@ export const map = {
         
         name: "Self test",
         component: SelfTest,
-        authorize: () => true,
+        authorize: [],
         back: [ HOME ]
         
     }
@@ -122,7 +137,7 @@ export const UNMATCHED = Symbol( "unmatched route" );
 
 const UnmatchedRouting = {
     
-    component: () => () => <div>Not found.</div>
+    component: () => <div>Not found.</div>
     
 };
 

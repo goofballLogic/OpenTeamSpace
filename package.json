@@ -3,14 +3,18 @@
   "version": "0.1.2",
   "private": true,
   "dependencies": {
+    "react-app-rewire-hot-loader": "^1.0.1",
+    "react-app-rewired": "^1.5.2",
+    "react-hot-loader": "^4.3.5",
     "react-toastify": "^4.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.13"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject"
   },
   "devDependencies": {
     "eventemitter3": "^3.1.0",
@@ -22,7 +26,7 @@
     "recharts": "^1.1.0",
     "redux": "^4.0.0",
     "tc2-react-good-bad-tracker": "0.0.5",
-    "tc2-react-simple-storage": "0.3.0",
+    "tc2-react-simple-storage": "0.4.0",
     "tc2-react-simple-teams": "0.1.2",
     "tc2-react-time-series-graph": "0.0.14"
   },

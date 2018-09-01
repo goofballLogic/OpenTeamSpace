@@ -1,0 +1,43 @@
+.maybe-loading {
+    
+    position: relative;
+    width: 100%;
+    
+}
+.maybe-loading .loading {
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba( 255, 255, 255, 0.7 );
+    display: flex;
+    justify-content: center;
+    font-size: 3rem;
+    padding-top: 80px;
+    
+}
+.maybe-loading .loading::before,
+.folder-list-loading::before {
+    
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    background: linear-gradient(to bottom right, #07F, transparent, transparent);
+    margin-top: -60px;
+    animation:     spin 0.2s infinite linear,
+                   pop 4s infinite alternate linear;
+    
+}
+@keyframes spin {
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(359deg); }
+}
+@keyframes pop {
+    from { margin-left: -50px; }
+    to { margin-left: 50px; }
+}

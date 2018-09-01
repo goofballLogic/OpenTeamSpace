@@ -20,7 +20,16 @@ export default function( state = { context: {} }, action ) {
             return withNewContext( { ...state.context, connecting: payload } );
         
         case CONNECTED:
-            return withNewContext( { ...state.context, connecting: undefined, connected: payload } );
+            return withNewContext( { ...state.context, connecting: undefined, connected: Object.assign( 
+                
+                payload,
+                {
+                
+                    provider: state.context.provider
+                    
+                }
+                
+            ) } );
 
         default:
             return state;

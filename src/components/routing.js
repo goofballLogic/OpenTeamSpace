@@ -8,9 +8,13 @@ import route, { map as routingMap, HOME, isAuthorized } from "./routes";
 const { location, history, URL } = global;
 const linkEventListener = new EventListener();
 
-const locationView = 
-    ( url = new URL( location ) ) =>
-        decodeURIComponent( url.searchParams.get( "view" ) ) || HOME;
+function locationView( url = new URL( location ) ) {
+    
+    const view = url.searchParams.get( "view" );
+    if ( !view ) return HOME;
+    return decodeURIComponent( view ) || HOME;
+    
+}
 
 const selectMap = 
     url => 
@@ -28,32 +32,28 @@ function nav( href, name ) {
 
 export class Link extends Component {
     
-    handleClick( e, name ) {
+    handleClick( e, name, href ) {
         
         e.preventDefault();
-        nav( e.target.href, name );
+        nav( href, name );
         
     }
     
     renderEnabledLink() {
         
         const { name, to, from, className, children } = this.props;
-        return <a onClick={e => this.handleClick( e, name )} href={`?view=${to}${from ? `&from=${from}` : ""}`} className={`routing-link ${className || ""}`}>
-    
-            {children}
-    
-        </a>;
+        const href = `?view=${to}${from ? `&from=${from}` : ""}`;
+        const linkClassName = `routing-link ${className || ""}`;
+        const clickHandler = e => this.handleClick( e, name, href );
+        return <a onClick={clickHandler} href={href} className={linkClassName}>{children}</a>;
 
     }
     
     renderDisabledLink() {
         
         const { className, children } = this.props;
-        return <span className={`routing-link routing-link-disabled ${className || ""}`}>
-        
-            {children}
-            
-        </span>;
+        const linkClassName = `routing-link routing-link-disabled ${className || ""}`;
+        return <span className={ linkClassName }>{children}</span>;
         
     }
     
@@ -66,21 +66,26 @@ export class Link extends Component {
     
 }
 
+const mapRoute = props => ( route, { prefix } ) => 
 
-
-const mapRoute = props => ( route, prefix ) => 
-
-    <Link disabled={!isAuthorized( route, props )} key={ route } to={ route } name={ routingMap[ route ].name }>
+    <Link   disabled={!isAuthorized( route, props )} 
+            key={ route } 
+            to={ route } 
+            name={ routingMap[ route ].name }>
         
-        { prefix }{ routingMap[ route ].name }
+        { prefix || "" }{ routingMap[ route ].name }
             
     </Link>
 
 ;
 
 export const FromLink = 
+
     ( { props, fromValue = new URL( location ).searchParams.get( "from" ) } ) => 
-        fromValue ? mapRoute( props )( fromValue, "Back to " ) : null;
+    
+        fromValue 
+            ? mapRoute( props )( fromValue, { prefix: "Back to " } ) 
+            : null;
 
 export class Nav extends Component {
 
@@ -104,11 +109,13 @@ export class Nav extends Component {
 
     render() {
 
+console.log( 1234 );
         const { url, className = "" } = this.props;
         const map = selectMap( url );
         const { back = [], forward = [], secondary = [] } = map;
         const linkBuilder = mapRoute( this.props );
-        return <nav className={`routing-nav ${className}`}>
+        const navClassName = `routing-nav ${className}`;
+        return <nav className={navClassName}>
 
             {back.length ? <div className="routing-nav-backwards">
 
@@ -214,8 +221,8 @@ export class Router extends Component {
         }
         try {
 
-            const Component = route( locationView(), this.props );
-            return <Component nav={ nav } />;
+            const ViewComponent = route( locationView(), this.props );
+            return <ViewComponent nav={ nav } />;
             
         } catch( ex ) {
             

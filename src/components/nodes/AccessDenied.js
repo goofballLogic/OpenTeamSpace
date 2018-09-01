@@ -4,7 +4,7 @@ import { Link } from "../routing";
 
 const AccessDenied = ( { message, redirect, redirectFrom, linkText } ) => <article>
 
-    <h2>Access denied</h2>
+    <h2>Hmm, I can't do this {redirect ? "yet" : ""}</h2>
     {message && 
         <p>{message}</p>}
     {redirect &&

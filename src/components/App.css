@@ -32,6 +32,12 @@
     align-items: center;
 
 }
+.app a.home img {
+    
+    max-height: 35px;
+    padding-right: 10px;
+    
+}
 .app .storage-status {
 
     flex: 1;

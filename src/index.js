@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import validateStorage from "./middleware/validate-storage";
+
+import middlewarez from "./middleware/index";
 
 import "./index.css";
 import App from "./components/App";
@@ -15,7 +16,7 @@ const initialState = {};
 const rootReducer = combineReducers( reducers );
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancers = composeEnhancers( applyMiddleware( validateStorage, thunk ) );
+const enhancers = composeEnhancers( applyMiddleware( thunk, ...middlewarez ) );
 
 const store = createStore( 
     

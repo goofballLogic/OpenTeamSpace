@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { fetchIndex, initializeFolder, isCurrentApplication, updateAccessRecord } from "./storage-logic";
+import { fetchIndex, initializeFolder, isCurrentApplication, updateAccessRecord } from "../logic/storage";
 
 export const CHANGE_CONTEXT = "src/actions/storage.CHANGE_CONTEXT";
 export const RESET_CONTEXT = "src/actions/storage.RESET_CONTEXT";

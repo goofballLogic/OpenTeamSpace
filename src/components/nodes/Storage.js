@@ -1,4 +1,3 @@
-/*global location*/
 import React, { Component } from "react";
 import { Saving } from "tc2-react-simple-storage";
 import "./Storage.css";
