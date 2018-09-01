@@ -36,6 +36,7 @@ class TeamsContainer extends Component {
 const mapStateToProps = ( { teams, storage } ) => ( { 
     
     ...teams,
+    unselected: teams.teams && teams.teams.filter( x => x.id !== ( teams.selected || {} ).id ),
     nav: buildTeamsNav(),
     selectedFolder: storage.context && storage.context.selectedFolder
     
