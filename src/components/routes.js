@@ -7,6 +7,7 @@ import SelfTest from "./nodes/SelfTest";
 import Storage from "../containers/Storage";
 import AccessDenied from "./nodes/AccessDenied";
 import CreateTeam from "../containers/CreateTeam";
+import Progress from "../containers/Progress";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -14,6 +15,7 @@ export const TEAMS = "/teams";
 export const CREATE_TEAM = "/teams/create";
 export const EDIT_TEAM = "/teams/:teamid";
 export const PROGRESS = "/teams/:teamid/progress";
+const PROGRESS_PATTERN = /^\/teams\/[^/]*\/progress$/;
 export const USERS = "/teams/:teamid/progress/users";
 export const RECORD = "/teams/:teamid/progress/create";
 export const GOALS = "/teams/:teamid/progress/create/goals";
@@ -39,6 +41,8 @@ function requireTeamSelection( route, props ) {
     
     const { selected } = props.teams;
     const authorized = !!selected;
+if ( !authorized ) console.log( "No team selection", props );
+
     return {
         
         authorized,
@@ -50,7 +54,7 @@ function requireTeamSelection( route, props ) {
     
 }
 
-export const map = {
+const map = {
 
     [ HOME ]: {
 
@@ -93,6 +97,8 @@ export const map = {
     [ PROGRESS ]: {
 
         name: "View progress",
+        match: route => PROGRESS_PATTERN.test( route ),
+        component: Progress,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ TEAMS ],
         forward: [ RECORD, USERS ],
@@ -149,7 +155,7 @@ function findUnauthorized( rules, route, props ) {
         if ( !result.authorized ) return result;
         
     }
-    
+
 }
 
 export function isAuthorized( route, props ) {
@@ -160,9 +166,17 @@ export function isAuthorized( route, props ) {
     
 }
 
-export default function findComponent( route, props ) {
+export const matchRoute = 
+
+    route => 
     
-    const routing = map[ route ] || UnmatchedRouting;
+        map[ route ] 
+        || Object.values( map ).find( routing => routing.match && routing.match( route ) )
+        || UnmatchedRouting;
+
+export default function findComponent( route, props ) {
+
+    const routing = matchRoute( route );
     const component = routing.component;
     if ( !component ) { throw new Error( `Route has no component: ${route}` ); }
     const rules = routing.authorize || [];

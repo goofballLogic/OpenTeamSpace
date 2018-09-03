@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import EventListener from "eventemitter3";
 
 import "./routing.css";
-import route, { map as routingMap, HOME, isAuthorized } from "./routes";
+import route, { HOME, isAuthorized, matchRoute } from "./routes";
 
 const { location, history, URL } = global;
 const linkEventListener = new EventListener();
@@ -16,9 +16,7 @@ function locationView( url = new URL( location ) ) {
     
 }
 
-const selectMap = 
-    url => 
-        routingMap[ locationView( url ) ] || {};
+const selectMap = url => matchRoute( locationView( url ) );
 
 const ANIMATE_DURATION = 1;
 
@@ -66,18 +64,24 @@ export class Link extends Component {
     
 }
 
-const mapRoute = props => ( route, { prefix } ) => 
-
-    <Link   disabled={!isAuthorized( route, props )} 
-            key={ route } 
-            to={ route } 
-            name={ routingMap[ route ].name }>
+const mapRoute = props => ( route, { prefix = "" } ) => {
+    
+    const linkRoute = matchRoute( route );
+    const text = `${prefix}${linkRoute.name}`;
+    const disabled = !isAuthorized( route, props );
+    let to = route;
+    if ( !disabled && props && props.teams && props.teams.selected ) {
         
-        { prefix || "" }{ routingMap[ route ].name }
+        to = to.replace( /:teamid/g, props.teams.selected.id );
+        
+    }
+    return <Link disabled={disabled} key={ route } to={ to } name={ linkRoute.name }>
+        
+        {text}
             
-    </Link>
-
-;
+    </Link>;
+    
+};
 
 export const FromLink = 
 
@@ -109,7 +113,6 @@ export class Nav extends Component {
 
     render() {
 
-console.log( 1234 );
         const { url, className = "" } = this.props;
         const map = selectMap( url );
         const { back = [], forward = [], secondary = [] } = map;

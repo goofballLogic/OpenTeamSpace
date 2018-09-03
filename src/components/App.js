@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Router from "../containers/Router";
 import { Link } from "./routing";
-import { SELF_TEST, HOME, map } from "./routes";
+import { SELF_TEST, HOME, matchRoute } from "./routes";
 import Nav from "../containers/Nav";
 import StorageStatus from "../containers/StorageStatus";
 import "./App.css";
@@ -15,6 +15,7 @@ class App extends Component {
     
     render() {
     
+console.log( "Rendering app", this.props );
         return (
 
            <div className="app">
@@ -33,7 +34,7 @@ class App extends Component {
                 
                     <Link className="home" to={ HOME }>
                     
-                        <img src="/logo-small-transparent.png" />
+                        <img src="/logo-small-transparent.png" alt="home logo" />
                     
                     </Link>
                     <StorageStatus />
@@ -41,7 +42,7 @@ class App extends Component {
                 </header>
                 <Nav {...this.props} />
                 <Router {...this.props} />
-                <Link className="self-test" to={ SELF_TEST }>{ map[ SELF_TEST ].name }</Link>
+                <Link className="self-test" to={ SELF_TEST }>{ matchRoute( SELF_TEST ).name }</Link>
                 
             </div>
 

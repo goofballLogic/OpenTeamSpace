@@ -20,6 +20,7 @@ class Storage extends Component {
         const { context = {}, cancelContext, changeContext, handleError } = this.props;
         return <article className="storage">
     
+            { context.connected && <FromLink props={ this.props } /> }
             <header>
             
                 <h2>{ titleForContext( context ) }</h2>
@@ -30,7 +31,6 @@ class Storage extends Component {
                 </p> }
                 
             </header>
-            { context.connected && <FromLink props={ this.props } /> }
             { !context.connected ? null : <p>
             
                 You are connected to the data folder you selected: <code>{context.connected.path().join( "/")}</code>.

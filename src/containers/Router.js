@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import { Router } from "../components/routing";
-const mapStateToProps = ( { storage } ) => ( { 
+const mapStateToProps = ( { storage, teams } ) => ( { 
     
-    storage
+    storage,
+    teams
     
 } );
 const mapDispatchToProps = ( dispatch, { nav } ) => ( {

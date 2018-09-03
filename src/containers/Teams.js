@@ -37,7 +37,7 @@ const mapStateToProps = ( { teams, storage } ) => ( {
     
     ...teams,
     unselected: teams.teams && teams.teams.filter( x => x.id !== ( teams.selected || {} ).id ),
-    nav: buildTeamsNav(),
+    nav: buildTeamsNav( teams ),
     selectedFolder: storage.context && storage.context.selectedFolder
     
 } );

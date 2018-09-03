@@ -1,5 +1,5 @@
 import React from "react";
-import { map } from "../routes";
+import { matchRoute } from "../routes";
 import { Link } from "../routing";
 
 const AccessDenied = ( { message, redirect, redirectFrom, linkText } ) => <article>
@@ -8,7 +8,7 @@ const AccessDenied = ( { message, redirect, redirectFrom, linkText } ) => <artic
     {message && 
         <p>{message}</p>}
     {redirect &&
-        <Link to={ redirect } from={ redirectFrom } name={ map[ redirect ].name }>{ linkText || map[ redirect ].name }</Link>}
+        <Link to={ redirect } from={ redirectFrom } name={ matchRoute( redirect ).name }>{ linkText || matchRoute( redirect ).name }</Link>}
 
 </article>;
 
