@@ -14,6 +14,7 @@ html {
   --left: calc(var(--menu) + var(--pad));
   --primary-color: #333;
   --small-pad: 15px;
+  --backing-color: #EEE;
 
 }
 body {

@@ -1,0 +1,23 @@
+.progress {
+  width: 100%; }
+  .progress header {
+    width: 100%;
+    display: flex;
+    flex-direction: column; }
+    .progress header .logo {
+      flex-basis: auto;
+      width: 200px;
+      height: 200px;
+      padding: var(--small-pad);
+      background-color: var(--backing-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--small-pad); }
+      .progress header .logo img {
+        max-width: calc(200px - var(--small-pad) - var(--small-pad));
+        max-height: calc(200px - var(--small-pad) - var(--small-pad)); }
+    .progress header h1 {
+      flex: 1;
+      text-transform: uppercase;
+      font-size: 3rem; }

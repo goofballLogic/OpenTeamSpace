@@ -1,5 +1,5 @@
 import { FETCH_TEAMS, FETCH_TEAMS_DATA, FETCH_TEAMS_ERROR, SELECT_TEAM } from "../actions/teams";
-import { DISCONNECTED } from "../actions/storage";
+import { RESET_CONTEXT } from "../actions/storage";
 
 export default function( state = {}, action ) {
     
@@ -39,7 +39,7 @@ export default function( state = {}, action ) {
                 selected: state.teams.find( x => x.id === payload.id )
                 
             };
-        case DISCONNECTED:
+        case RESET_CONTEXT:
             return {};
         default:
             return state;

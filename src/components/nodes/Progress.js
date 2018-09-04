@@ -1,12 +1,15 @@
 import React from "react";
+import Team from "./Team";
+
+import "./Progress.css";
 
 const Progress = 
 
-    () =>
+    ( { selected } ) =>
     
         <article className="progress">
 
-            <h1>Progress</h1>
+            <Team {...selected} />
         
         </article>;
         

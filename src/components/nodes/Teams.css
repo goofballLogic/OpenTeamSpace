@@ -6,56 +6,8 @@
     flex-wrap: wrap;
     
 }
-.teams .team {
-    
-    width: 300px;
-    height: 300px;
-    
-    margin: 0 var(--half-pad) var(--half-pad) 0;
-    background-color: #DDD;    
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    text-decoration: none;
-    color: black;
-    text-transform: uppercase;
-    font-size: 10pt;
-    transition: all 0.2s;
-    border: none;
-    background-color: transparent;
-    
-}
 .teams form button.team:hover {
     
     transform: scale(1.05);
-
-}
-.teams .name {
-    
-    width: 300px;
-    flex-basis: auto;
-    height: 75px;
-    background-color: #EEE;
-    line-height: 75px;
-    padding: 0 calc(2 * var(--small-pad));
-    text-align: center;
-    
-}
-.teams .logo {
-    
-    width: 300px;
-    background-color: #DDD;
-    flex-basis: auto;
-    height: 225px;
-    align-self: center;
-    padding: calc(2 * var(--small-pad));
-    text-align: center;
-    
-}
-.teams .logo img {
-    
-    max-width: 100%;
-    max-height: 100%;
 
 }

@@ -40,15 +40,33 @@ function requireStorageContext( route, props ) {
 function requireTeamSelection( route, props ) {
     
     const { selected } = props.teams;
-    const authorized = !!selected;
-if ( !authorized ) console.log( "No team selection", props );
-
+    if ( !selected ) {
+        
+        return {
+        
+            authorized: false,
+            message: "You need to choose a team before accessing this page.",
+            redirect: TEAMS,
+            redirectFrom: route
+            
+        };
+        
+    }
+    const pathTeamId = route && route.split( "/" )[ 2 ];
+    if ( pathTeamId && selected.id !== pathTeamId ) {
+        
+        return {
+            
+            authorized: false,
+            message: "You don't have access to the team you've attempted to access.",
+            redirect: TEAMS
+            
+        };
+        
+    }
     return {
         
-        authorized,
-        message: "You need to choose a team before accessing this page.",
-        redirect: TEAMS,
-        redirectFrom: route
+        authorized: true
         
     };
     
