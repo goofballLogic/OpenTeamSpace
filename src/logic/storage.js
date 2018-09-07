@@ -42,11 +42,13 @@ export async function initializeFolder( provider, folder ) {
     
 }
 
+const buildContainerName = ( { type, name, id } ) => `${type}: ${name} (${id})`;
+
 export async function addContainer( parent, provider, spec ) {
     
     if ( !parent ) throw new Error( "Argument not supplied: parent" );
-    const { type, name, id } = spec;
-    const folderName = `${type}: ${name} (${id})`;
+    const { type, id } = spec;
+    const folderName = buildContainerName( spec );
     await provider.createFolder( parent, folderName );
     const index = await provider.downloadParsedJSON( parent, INDEX_FILENAME );
     index.containers = index.containers || {};
@@ -59,6 +61,36 @@ export async function addContainer( parent, provider, spec ) {
     };
     await provider.uploadAsJSON( parent, INDEX_FILENAME, index );
 
+}
+
+export async function fetchContainerIndex( parent, provider, spec ) {
+    
+    if ( !parent ) throw new Error( "Argument not supplied: parent" );
+    const { type, id } = spec;
+    const folderName = buildContainerName( spec );
+    let folderSpec = parent.list.find( x => x.name === folderName );
+    if ( !folderSpec ) {
+        
+        await addContainer( parent, provider, spec );
+        await provider.refresh( parent );
+        folderSpec = parent.list.find( x => x.name === folderName );
+
+    }
+    if ( !folderSpec ) {
+        
+        throw new Error( `Unable to find/read folder ${folderName}` );
+        
+    }
+    const containerFolder = await parent.go( folderSpec );
+    let index = await provider.downloadParsedJSON( containerFolder, INDEX_FILENAME );
+    if ( !index ) {
+    
+        index = {};
+        await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
+        
+    }
+    return index;
+    
 }
 
 export async function listContainers( parent, provider, type ) {

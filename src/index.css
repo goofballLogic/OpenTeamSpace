@@ -30,6 +30,7 @@ body {
   margin-bottom: calc(var(--pad) * 2);
   padding-bottom: var(--pad);
   padding-top: calc(var(--small-pad) * 2);
+  min-height: 100vh;
   
 }
 p {
