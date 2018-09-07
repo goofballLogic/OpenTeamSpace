@@ -1,7 +1,9 @@
 import { 
     FETCH_TEAMS, FETCH_TEAMS_DATA, FETCH_TEAMS_ERROR, 
     SELECT_TEAM, 
-    FETCH_TEAM_DETAILS, FETCH_TEAM_DETAILS_DATA, FETCH_TEAM_DETAILS_ERROR 
+    FETCH_TEAM_DETAILS, FETCH_TEAM_DETAILS_DATA, FETCH_TEAM_DETAILS_ERROR,
+    UPDATE_TEAM_PROFILES,
+    SAVE_TEAM_DETAILS, SAVE_TEAM_DONE, SAVE_TEAM_DETAILS_DONE, SAVE_TEAM_DETAILS_ERROR
 } from "../actions/teams";
 import { RESET_CONTEXT } from "../actions/storage";
 
@@ -58,9 +60,55 @@ export default function( state = {}, action ) {
             return {
                 
                 ...state,
-                selected: { ...state.selected, loading: false, details: payload.data }
+                selected: { ...state.selected, loading: false, details: payload.data, err: undefined }
                 
             };
+        case FETCH_TEAM_DETAILS_ERROR:
+            if ( !state.selected ) return state;
+            return {
+                
+                ...state,
+                selected: { ...state.selected, loading: false, err: payload }
+                
+            };
+        case UPDATE_TEAM_PROFILES:
+            return {
+                
+                ...state,
+                selected: { 
+                    
+                    ...state.selected, 
+                    dirty: true, 
+                    details: { ...state.selected.details, profiles: payload.profiles }
+                    
+                }
+                
+            };
+        case SAVE_TEAM_DETAILS:
+            if ( !state.selected ) return state;
+            return {
+                
+                ...state,
+                selected: { ...state.selected, saving: true, err: undefined }
+                
+            };
+        case SAVE_TEAM_DETAILS_DONE:
+            if ( !state.selected ) return state;
+            return {
+                
+                ...state,
+                
+                selected: { ...state.selected, saving: false, dirty: false }
+                
+            };
+        case SAVE_TEAM_DETAILS_ERROR:
+            if ( !state.selected ) return state;
+            return {
+                
+                ...state,
+                selected: { ...state.selected, saving: false, err: payload }
+                
+            }; 
         default:
             return state;
             

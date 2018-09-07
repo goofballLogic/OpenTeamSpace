@@ -17,15 +17,19 @@ html {
   --backing-color: #EEE;
 
 }
+body, input, textarea, select, button {
+  
+  font-family: Arial;
+  font-size: 12pt;
+  
+}
 body {
 
   background-color: white;
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial;
   color: var(--primary-color);
-  font-size: 12pt;
   box-shadow: 0 0 30px 0;
   margin-bottom: calc(var(--pad) * 2);
   padding-bottom: var(--pad);

@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import Users from "../components/nodes/Users";
 import { connect } from "react-redux";
-import { fetchTeamDetails } from "../actions/teams";
+import { fetchTeamDetails, updateTeamProfiles, saveTeamDetails } from "../actions/teams";
 
 class UsersContainer extends Component {
     
     ensureDetails() {
     
-        const { selectedFolder, selected, details, loading, dispatchFetchTeamDetails } = this.props;
-console.log( this.props );
-        if ( !( details || loading ) ) dispatchFetchTeamDetails( selected, selectedFolder );
+        const { selectedFolder, selected, isLoaded, loading, dispatchFetchTeamDetails } = this.props;
+        if ( !( isLoaded || loading ) ) dispatchFetchTeamDetails( selected, selectedFolder );
         
     }
     
@@ -33,10 +32,27 @@ console.log( this.props );
     
 }
 
+const buildEditable = 
+
+    teams => 
+
+        teams && teams.selected && teams.selected.details && { 
+            
+            size: 8, 
+            team: {
+                
+                profiles: teams.selected.details.profiles || []
+                
+            }
+            
+        };
+        
 const mapStateToProps = ( { teams, storage } ) => ( { 
     
     selected: teams.selected,
-    details: teams.selected && teams.selected.details,
+    isLoaded: teams.selected && teams.selected.details,
+    isDirty: teams.selected && teams.selected.dirty,
+    editable: buildEditable( teams ),
     loading: teams.selected && teams.selected.loading,
     selectedFolder: storage.context && storage.context.selectedFolder
     
@@ -44,7 +60,9 @@ const mapStateToProps = ( { teams, storage } ) => ( {
 
 const mapDispatchToProps = ( dispatch ) => ( {
 
-    dispatchFetchTeamDetails: ( selected, selectedFolder ) => dispatch( fetchTeamDetails( selected, selectedFolder ) )
+    dispatchFetchTeamDetails: ( selected, selectedFolder ) => dispatch( fetchTeamDetails( selected, selectedFolder ) ),
+    handleChange: ( { profiles } ) => dispatch( updateTeamProfiles( profiles ) ),
+    handleSave: e => { e.preventDefault(); dispatch( saveTeamDetails() ); }
     
 } );
 

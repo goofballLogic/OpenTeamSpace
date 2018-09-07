@@ -1,0 +1,173 @@
+.users .team {
+    
+    position: fixed;
+    bottom: calc(var(--pad) * 2 + var(--small-pad));
+    left: var(--pad);
+    
+}
+.users .save-changes button {
+    
+    margin: var(--small-pad) 0;
+    padding: var(--small-pad);
+    min-width: 200px;
+    transition: all 0.5s;
+    
+}
+.users .save-changes button.urgent {
+    
+    zoom: 1.1;
+    -webkit-box-shadow: 0 0 30px -10px red;
+    box-shadow: 0 0 10px 0 red;
+    background-color: #fff7f7;
+    color: #700;
+    font-weight: bold;
+    
+}
+.users .team-editor {
+    
+    display: flex;
+    flex-direction: column;
+    
+}
+.users .team-details-editor {
+    
+    display: none;
+    
+}
+.users .profile-card {
+    
+    max-width: 900px;
+    transition: all 0.2s;
+    box-shadow: 0 0 10px -3px black;
+    padding: 20px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 160px;
+    grid-template-rows: 50px 110px;
+    overflow: hidden;
+    max-height: 200px;
+    
+}
+.users .profile-card.undefined {
+    
+    opacity: 0.5;
+    
+}
+.users .profile-card.undefined.selected {
+    
+    max-height: 0;
+    opacity: 0;
+    
+}
+.users .profile-card.undefined + .undefined {
+    
+    margin-top: -150px;
+    
+}
+.users .profile-card + .profile-card {
+    
+    margin-top: 10px;
+    
+}
+.users .profile-swatch {
+    
+    display: none;
+    
+}
+.users .profile-name {
+    
+    margin-top: 0;
+    border-bottom: solid 5px var(--profile-color);
+    
+}
+.users .profile-card .profile-avatar {
+    
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    padding: var(--small-pad);
+    
+}
+.users .profile-card .profile-blurb {
+    
+    height: 110px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    margin-right: var(--small-pad);
+    
+}
+.users .editing .profile-card {
+    
+    display: none;
+    
+}
+.users .editing .profile-card.selected {
+    
+    display: grid;
+    margin-top: 10px;
+    
+}
+.users .profile-card-editor {
+    
+    line-height: 1.5;
+    
+}
+.users .profile-card-editor input[type=text],
+.users .profile-card-editor textarea {
+    
+    padding: var(--small-pad);
+    border: none;
+    background-color: #eee;
+    
+}
+.users .profile-card-editor input[type=text] {
+    
+    min-width: 300px;
+    
+}
+.users .profile-card-editor textarea {
+    
+    width: 100%;
+    max-width: 700px;
+    
+}
+.users .profile-card-editor label {
+    
+    display: flex;
+    margin: 10px 0;
+    
+}
+.users .profile-card-editor label span {
+    
+    flex-basis: auto;
+    width: 100px;
+    padding-top: var(--small-pad);
+    
+}
+.users .profile-card-editor aside {
+    
+    max-width: 800px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    
+}
+.users .profile-card-editor .profile-color-swatch {
+    
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 50%;
+    
+}
+.users .picker-canvas svg {
+    
+    max-width: 30px;
+    max-height: 30px;
+    
+}
+
