@@ -15,7 +15,6 @@ class App extends Component {
     
     render() {
     
-console.log( "Rendering app", this.props );
         return (
 
            <div className="app">
@@ -34,7 +33,7 @@ console.log( "Rendering app", this.props );
                 
                     <Link className="home" to={ HOME }>
                     
-                        <img src="/logo-small-transparent.png" alt="home logo" />
+                        <img src="./logo-small-transparent.png" alt="home logo" />
                     
                     </Link>
                     <StorageStatus />
