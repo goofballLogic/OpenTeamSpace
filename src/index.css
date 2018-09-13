@@ -54,3 +54,10 @@ footer {
   margin: var(--half-pad);
   
 }
+.danger-button {
+  
+  background-color: #FFF0F0;
+  color: #A00;
+  font-weight: bolder;
+  
+}

@@ -32,6 +32,12 @@ class UsersContainer extends Component {
     
 }
 
+const sortByName =
+
+    profiles =>
+    
+        [ ...profiles ].sort( ( x, y ) => x.name > y.name ? 1 : x.name < y.name ? -1 : 0 );
+        
 const buildEditable = 
 
     teams => 
@@ -41,7 +47,7 @@ const buildEditable =
             size: 8, 
             team: {
                 
-                profiles: teams.selected.details.profiles || []
+                profiles: sortByName( teams.selected.details.profiles || [] )
                 
             }
             
@@ -62,7 +68,16 @@ const mapDispatchToProps = ( dispatch ) => ( {
 
     dispatchFetchTeamDetails: ( selected, selectedFolder ) => dispatch( fetchTeamDetails( selected, selectedFolder ) ),
     handleChange: ( { profiles } ) => dispatch( updateTeamProfiles( profiles ) ),
-    handleSave: e => { e.preventDefault(); dispatch( saveTeamDetails() ); }
+    handleSave: e => { e.preventDefault(); dispatch( saveTeamDetails() ); },
+    handleArchive: ( profile, editable ) => {
+     
+        if ( window.confirm( "Are you sure you want to archive this profile?" ) ) {
+            
+            dispatch( updateTeamProfiles( editable.team.profiles.filter( x => x.id !== profile.id ) ) );
+            
+        }
+        
+    }
     
 } );
 

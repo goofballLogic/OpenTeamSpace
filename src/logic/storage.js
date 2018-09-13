@@ -26,17 +26,19 @@ export async function updateAccessRecord( provider, folder ) {
 
 }
 
+const buildIndex = description => ( {
+        
+    owner: APP_ID,
+    version: "0.1",
+    created: dateString(),
+    description,
+    id: shortid()
+    
+} );
+
 export async function initializeFolder( provider, folder ) {
     
-    const index = {
-        
-        owner: APP_ID,
-        version: "0.1",
-        created: dateString(),
-        description: "This is the metadata file for the application",
-        id: shortid()
-    
-    };
+    const index = buildIndex( "This is the metadata file for the application" );
     await saveIndex( provider, folder, index );
     return index;
     
@@ -63,10 +65,10 @@ export async function addContainer( parent, provider, spec ) {
 
 }
 
-export async function fetchContainerIndex( parent, provider, spec ) {
+async function ensureContainerFolder( parent, provider, spec ) {
     
     if ( !parent ) throw new Error( "Argument not supplied: parent" );
-    const { type, id } = spec;
+    if ( !spec ) throw new Error( "Argument not supplied: spec" );
     const folderName = buildContainerName( spec );
     let folderSpec = parent.list.find( x => x.name === folderName );
     if ( !folderSpec ) {
@@ -81,14 +83,37 @@ export async function fetchContainerIndex( parent, provider, spec ) {
         throw new Error( `Unable to find/read folder ${folderName}` );
         
     }
-    const containerFolder = await parent.go( folderSpec );
-    let index = await provider.downloadParsedJSON( containerFolder, INDEX_FILENAME );
+    return await parent.go( folderSpec );
+    
+}
+
+async function ensureIndex( folder, provider, description ) {
+    
+    let index = await provider.downloadParsedJSON( folder, INDEX_FILENAME );
     if ( !index ) {
     
-        index = {};
-        await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
+        index = buildIndex( description );
+        await provider.uploadAsJSON( folder, INDEX_FILENAME, index );
         
     }
+    return index;
+    
+}
+export async function fetchContainerIndex( parent, provider, spec ) {
+    
+    const containerFolder = await ensureContainerFolder( parent, provider, spec );
+    return ensureIndex( containerFolder, provider );
+    
+}
+
+export async function patchContainerIndex( parent, provider, spec, props ) {
+    
+    const containerFolder = await ensureContainerFolder( parent, provider, spec );
+    const index = { 
+        ...ensureIndex( containerFolder, provider, "Container for " + spec.type ), 
+        ...props 
+    };
+    await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
     return index;
     
 }

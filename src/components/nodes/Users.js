@@ -7,7 +7,7 @@ import "./Users.css";
 
 const Users =
 
-    ( { selected, editable, details, isDirty, handleChange, handleSave } ) =>
+    ( { selected, editable, details, isDirty, handleChange, handleSave, handleArchive } ) =>
     
         <MaybeLoading className="users" loading={selected && ( selected.loading || selected.saving )} text="Hang on - working on it...">
         
@@ -19,7 +19,7 @@ const Users =
                 
             </form>
             <Team {...selected} />
-            { editable && <TeamEditor {...editable } onChange={ handleChange } /> }
+            { editable && <TeamEditor {...editable } onChange={ handleChange } onArchiveProfile={ profile => handleArchive( profile, editable ) } /> }
             
         </MaybeLoading>;
         

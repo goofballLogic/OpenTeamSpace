@@ -5,7 +5,8 @@
     left: var(--pad);
     
 }
-.users .save-changes button {
+.users .save-changes button,
+.users .profile-actions button {
     
     margin: var(--small-pad) 0;
     padding: var(--small-pad);
@@ -34,11 +35,33 @@
     display: none;
     
 }
+.users .team-profiles {
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+}
+.users .profile-actions {
+    
+    order: -1;
+    
+}
+.users .profile-actions button + button {
+    
+    margin-left: 1em;
+    
+}
 .users .profile-card {
     
+    background: linear-gradient(to bottom right, white, #F0F0F0);
     max-width: 900px;
-    transition: all 0.2s;
-    box-shadow: 0 0 10px -3px black;
+    transition: opacity 0.2s,
+        margin-top 0.2s 0.2s, 
+        padding 0.2s 0.2s,
+        max-height 0.2s 0.2s,
+        margin-bottom 0.4s 0.8s;
+    box-shadow: 0 0 10px -5px black;
     padding: 20px;
     height: 200px;
     background-color: white;
@@ -49,27 +72,32 @@
     grid-template-rows: 50px 110px;
     overflow: hidden;
     max-height: 200px;
+    margin-left: calc(20px + var(--profile-index) * 20px);
+    t-ransform: rotateZ(calc(-4deg + var(--profile-index) * 1deg));
+    transform-origin: left;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 1;
     
 }
 .users .profile-card.undefined {
     
-    opacity: 0.5;
+    color: silver;
+
+}
+.users .profile-card:not(.selected):hover {
+    
+    margin-bottom: 140px;
     
 }
 .users .profile-card.undefined.selected {
     
-    max-height: 0;
-    opacity: 0;
-    
-}
-.users .profile-card.undefined + .undefined {
-    
-    margin-top: -150px;
+    opacity: 0.1;
     
 }
 .users .profile-card + .profile-card {
     
-    margin-top: 10px;
+    margin-top: -140px;
     
 }
 .users .profile-swatch {
@@ -80,7 +108,7 @@
 .users .profile-name {
     
     margin-top: 0;
-    border-bottom: solid 5px var(--profile-color);
+    border-bottom: solid 1px var(--profile-color);
     
 }
 .users .profile-card .profile-avatar {
@@ -100,15 +128,20 @@
     margin-right: var(--small-pad);
     
 }
-.users .editing .profile-card {
+.users .editing .profile-card:not(.selected) {
     
-    display: none;
+    opacity: 0;
+    max-height: 0px;
+    padding: 0px;
+    margin-top: 0;
     
 }
 .users .editing .profile-card.selected {
     
     display: grid;
     margin-top: 10px;
+    margin-left: 0;
+    max-height: 500px;
     
 }
 .users .profile-card-editor {
@@ -121,7 +154,6 @@
     
     padding: var(--small-pad);
     border: none;
-    background-color: #eee;
     
 }
 .users .profile-card-editor input[type=text] {
@@ -133,12 +165,17 @@
     
     width: 100%;
     max-width: 700px;
+    height: 10em;
     
 }
 .users .profile-card-editor label {
     
     display: flex;
     margin: 10px 0;
+    align-items: baseline;
+    border-bottom: solid 1px black;
+    padding: 10px;
+    max-width: 800px;
     
 }
 .users .profile-card-editor label span {
@@ -166,8 +203,16 @@
 }
 .users .picker-canvas svg {
     
-    max-width: 30px;
-    max-height: 30px;
+    max-width: 70px;
+    max-height: 70px;
+    padding: 20px;
+    margin: -10px;
+    transition: all 0.3s;
+
+}
+.users .picker-canvas svg:hover {
+    
+    padding: 10px;
+    background-color: #F7F7F7;
     
 }
-
