@@ -24,7 +24,7 @@ const createTeam = store => next => action => {
                 
                 // update index with a reference to the team file
                 await addContainer( connected, provider, { type: "team", id, name, logo } );
-                
+                provider.refresh( connected );
                 next( createSucceeded() );
                 
             } catch( ex ) {
