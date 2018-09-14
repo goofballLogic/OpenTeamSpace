@@ -5,6 +5,7 @@
     padding-left: calc(var(--left) + var(--pad));
     min-height: 100vh;
     display: flex;
+    overflow-x: hidden;
 
 }
 .app a.self-test {

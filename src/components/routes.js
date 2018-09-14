@@ -9,6 +9,7 @@ import AccessDenied from "./nodes/AccessDenied";
 import CreateTeam from "../containers/CreateTeam";
 import Progress from "../containers/Progress";
 import Users from "../containers/Users";
+import Record from "../containers/Record";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -20,6 +21,7 @@ const PROGRESS_PATTERN = /^\/teams\/[^/]*\/progress$/;
 export const USERS = "/teams/:teamid/progress/users";
 const USERS_PATTERN = /^\/teams\/[^/]*\/progress\/users$/;
 export const RECORD = "/teams/:teamid/progress/create";
+const RECORD_PATTERN = /^\/teams\/[^/]*\/progress\/create$/;
 export const GOALS = "/teams/:teamid/progress/create/goals";
 
 export const SELF_TEST = "/self-test";
@@ -137,6 +139,8 @@ const map = {
     [ RECORD ]: {
 
         name: "Record an assessment",
+        match: route => RECORD_PATTERN.test( route ),
+        component: Record,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS ],
         forward: [ GOALS ],
