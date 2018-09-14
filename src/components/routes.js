@@ -10,6 +10,7 @@ import CreateTeam from "../containers/CreateTeam";
 import Progress from "../containers/Progress";
 import Users from "../containers/Users";
 import Record from "../containers/Record";
+import Goals from "../containers/Goals";
 
 export const HOME = "/";
 export const STORAGE = "/storage";
@@ -23,6 +24,7 @@ const USERS_PATTERN = /^\/teams\/[^/]*\/progress\/users$/;
 export const RECORD = "/teams/:teamid/progress/create";
 const RECORD_PATTERN = /^\/teams\/[^/]*\/progress\/create$/;
 export const GOALS = "/teams/:teamid/progress/create/goals";
+const GOALS_PATTERN = /^\/teams\/[^/]*\/progress\/create\/goals$/;
 
 export const SELF_TEST = "/self-test";
 
@@ -150,6 +152,8 @@ const map = {
     [ GOALS ]: {
 
         name: "Goals",
+        match: route => GOALS_PATTERN.test( route ),
+        component: Goals,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS, RECORD ]
 
