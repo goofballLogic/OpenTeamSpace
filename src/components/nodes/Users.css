@@ -56,6 +56,7 @@
     
     background: linear-gradient(to bottom right, white, #F0F0F0);
     max-width: 900px;
+    width: 900px;
     transition: opacity 0.2s,
         margin-top 0.2s 0.2s, 
         padding 0.2s 0.2s,

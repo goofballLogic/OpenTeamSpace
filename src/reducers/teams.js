@@ -1,10 +1,11 @@
-import { 
+import {
     FETCH_TEAMS, FETCH_TEAMS_DATA, FETCH_TEAMS_ERROR, 
     SELECT_TEAM, 
     FETCH_TEAM_DETAILS, FETCH_TEAM_DETAILS_DATA, FETCH_TEAM_DETAILS_ERROR,
     UPDATE_TEAM_PROFILES,
     SAVE_TEAM_DETAILS, SAVE_TEAM_DONE, SAVE_TEAM_DETAILS_DONE, SAVE_TEAM_DETAILS_ERROR
 } from "../actions/teams";
+import { CREATE } from "../actions/create-team";
 import { RESET_CONTEXT } from "../actions/storage";
 
 export default function( state = {}, action ) {
@@ -12,6 +13,14 @@ export default function( state = {}, action ) {
     const { type, payload } = action;
     switch( type ) {
         
+        case CREATE:
+            return {
+                
+                ...state,
+                teams: undefined
+                
+            };
+            
         case FETCH_TEAMS:
             return {
                 

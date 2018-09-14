@@ -1,5 +1,5 @@
 import { SAVE_TEAM_DETAILS, saveTeamDetailsDone, saveTeamDetailsError } from "../actions/teams";
-import { listContainers, saveIndex, patchContainerIndex } from "../logic/storage";
+import { listContainers, patchContainerIndex } from "../logic/storage";
 
 async function findAndSaveTeamIndex( store, provider ) {
 
@@ -15,13 +15,9 @@ async function findAndSaveTeamIndex( store, provider ) {
 
     if ( selected.dirty && selected.details ) {
 
-console.log( "list containers" );
         const folders = await listContainers( connected, provider, "team" );
         const teamFolderSpec = folders.find( spec => spec.id === selected.id );
-console.log( "find folder spec", teamFolderSpec );
-console.log( "patching container index" );
         await patchContainerIndex( connected, provider, teamFolderSpec, selected.details );
-console.log( "patch complete" );
 
     }
     
