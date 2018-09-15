@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, combineReducers, compose, applyMiddleware } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
@@ -10,17 +10,17 @@ import "./index.css";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 
-import * as reducers from "./reducers/index";
+import reducers from "./reducers/index";
 
 const initialState = {};
-const rootReducer = combineReducers( reducers );
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancers = composeEnhancers( applyMiddleware( thunk, ...middlewarez ) );
 
 const store = createStore( 
     
-    rootReducer,
+    reducers,
     initialState,
     enhancers
 

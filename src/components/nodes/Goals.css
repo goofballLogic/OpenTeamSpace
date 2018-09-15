@@ -1,0 +1,54 @@
+.goals .choice > input[type=radio] {
+    
+    display: none;
+    
+}
+.goals .choice:not(.editing) .choice-content {
+    
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.goals .choice:not(.editing) .choice-content .goal,
+.goals .choice:not(.editing) .choice-content .notes {
+    
+    flex-basis: auto;
+    width: 100%;
+    
+}
+.goals .choice .choice-content label {
+    
+    display: flex;
+    
+}
+.goals .choice .choice-content span,
+.goals .choice .choice-content input,
+.goals .choice .choice-content textarea {
+    
+    padding: 0.5rem;
+    
+}
+.goals .choice .choice-content span {
+    
+    width: 150px;
+    
+}
+.goals .choice .choice-content input,
+.goals .choice .choice-content textarea {
+    
+    border: none;
+    border-bottom: solid 0.1px silver;
+    margin-left: 10px;
+    width: 40rem;
+
+}
+.goals .choice .choice-content textarea {
+    
+    height: 6rem;
+    
+}
+.goals .choice .choice-content input[type=number] {
+    
+    width: 4rem;
+    
+}

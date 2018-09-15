@@ -1,7 +1,12 @@
-.storage .saving {
+.storage {
     
+    min-height: 600px;
     position: relative;
     
+}
+.storage .saving {
+    
+
 }
 .storage .saving header > h2,
 .storage .saving header > button {

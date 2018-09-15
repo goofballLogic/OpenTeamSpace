@@ -5,23 +5,12 @@
     left: var(--pad);
     
 }
-.users .save-changes button,
 .users .profile-actions button {
     
     margin: var(--small-pad) 0;
     padding: var(--small-pad);
     min-width: 200px;
     transition: all 0.5s;
-    
-}
-.users .save-changes button.urgent {
-    
-    zoom: 1.1;
-    -webkit-box-shadow: 0 0 30px -10px red;
-    box-shadow: 0 0 10px 0 red;
-    background-color: #fff7f7;
-    color: #700;
-    font-weight: bold;
     
 }
 .users .team-editor {

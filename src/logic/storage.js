@@ -65,7 +65,7 @@ export async function addContainer( parent, provider, spec ) {
 
 }
 
-async function ensureContainerFolder( parent, provider, spec ) {
+export async function ensureContainerFolder( parent, provider, spec ) {
     
     if ( !parent ) throw new Error( "Argument not supplied: parent" );
     if ( !spec ) throw new Error( "Argument not supplied: spec" );
@@ -89,6 +89,7 @@ async function ensureContainerFolder( parent, provider, spec ) {
 
 async function ensureIndex( folder, provider, description ) {
     
+
     let index = await provider.downloadParsedJSON( folder, INDEX_FILENAME );
     if ( !index ) {
     
@@ -109,12 +110,17 @@ export async function fetchContainerIndex( parent, provider, spec ) {
 export async function patchContainerIndex( parent, provider, spec, props ) {
     
     const containerFolder = await ensureContainerFolder( parent, provider, spec );
-    const index = { 
-        ...ensureIndex( containerFolder, provider, "Container for " + spec.type ), 
-        ...props 
-    };
+    const existingProps = await ensureIndex( containerFolder, provider, "Container for " + spec.type );
+    const index = { ...existingProps, ...props };
     await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
     return index;
+    
+}
+
+export async function uploadContainerItem( parent, provider, spec, filename, data ) {
+    
+    const containerFolder = await ensureContainerFolder( parent, provider, spec );
+    await provider.uploadAsJSON( containerFolder, filename, data );
     
 }
 
