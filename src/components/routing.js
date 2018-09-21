@@ -40,7 +40,7 @@ export class Link extends Component {
     renderEnabledLink() {
         
         const { name, to, from, className, children } = this.props;
-        const href = `?view=${to}${from ? `&from=${from}` : ""}`;
+        const href = `${to}${from ? `&from=${from}` : ""}`;
         const linkClassName = `routing-link ${className || ""}`;
         const clickHandler = e => this.handleClick( e, name, href );
         return <a onClick={clickHandler} href={href} className={linkClassName}>{children}</a>;
@@ -64,22 +64,38 @@ export class Link extends Component {
     
 }
 
-const mapRoute = props => ( route, { prefix = "" } ) => {
-    
-    const linkRoute = matchRoute( route );
-    const text = `${prefix}${linkRoute.name}`;
-    const disabled = !isAuthorized( route, props );
-    let to = route;
-    const teamid = ( props && props.teams && props.teams.selected && props.teams.selected.id ) || "?";
-    to = to.replace( /:teamid/g, teamid );
-    to = to.replace( /:when/g, ( new Date() ).toISOString().substring( 0, 10 ) );
-    return <Link disabled={disabled} key={ route } to={ to } name={ linkRoute.name }>
+const routeTo = 
+
+    props =>
+
+        ( route, values = {} ) => {
         
-        {text}
+            let to = route;
+            const teamid = values.teamid || ( props && props.teams && props.teams.selected && props.teams.selected.id ) || "?";
+            to = to.replace( /:teamid/g, teamid );
+            const when = values.when || ( new Date() ).toISOString().substring( 0, 10 );
+            to = to.replace( /:when/g, when );
+            return `?view=${to}`;
             
-    </Link>;
+        };
+
+const mapRoute = 
     
-};
+    props => 
+    
+        ( route, opts = {} ) => {
+
+            const disabled = !isAuthorized( route, props );
+            const to = routeTo( props )( route, opts.values );
+            const linkRoute = matchRoute( route );
+            const text = `${opts.prefix || ""}${linkRoute.name}`;
+            return <Link disabled={disabled} key={ route } to={ to } name={ linkRoute.name }>
+                
+                {text}
+                    
+            </Link>;
+            
+        };
 
 export const FromLink = 
 
@@ -224,7 +240,7 @@ export class Router extends Component {
 
             const routing = route( locationView(), this.props );
             const ViewComponent = routing.component;
-            return <ViewComponent nav={ nav } params={routing.params} />;
+            return <ViewComponent nav={ nav } routeTo={ routeTo( this.props ) } params={routing.params} />;
             
         } catch( ex ) {
             

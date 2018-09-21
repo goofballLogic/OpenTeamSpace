@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { fetchTeamDetails } from "../actions/teams";
 import template from "../logic/goals-template";
 import { load, save } from "../actions/record";
+import { RECORD } from "../components/routes";
 
 const buildTarget =
 
@@ -68,7 +69,8 @@ class RecordContainer extends Component {
     
     handleChangeDate( e ) {
         
-        throw new Error( "Navigate to new date" );
+        const { navigateToWhen } = this.props;
+        navigateToWhen( e.target.value );
 
     }
     
@@ -156,11 +158,12 @@ const mapStateToProps = ( { teams = {}, goals = {}, storage = {}, record = {} },
     
 } );
 
-const mapDispatchToProps = ( dispatch ) => ( {
+const mapDispatchToProps = ( dispatch, { nav, routeTo } ) => ( {
     
     dispatchFetchTeamDetails: () => dispatch( fetchTeamDetails() ),
     dispatchLoadRecord: when => dispatch( load( when ) ),
-    dispatchSave: ( when, scores ) => dispatch( save( { when, scores } ) )
+    dispatchSave: ( when, scores ) => dispatch( save( { when, scores } ) ),
+    navigateToWhen: when => nav( routeTo( RECORD, { when } ), "Record an assessment for " + when )
     
 } );
 
