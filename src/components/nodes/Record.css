@@ -1,0 +1,112 @@
+.record input {
+    
+    padding: 10px;
+    border: none;
+    border-bottom: solid 0.1px silver;
+    
+}
+.record .menu.chosen .choice input:not(:checked) + .choice-content {
+    
+    display: none;
+
+}
+.record .menu.chosen .choice input:checked + .choice-content {
+    
+    transition: margin-top 0s;
+    margin-top: 1rem;
+    box-shadow: none;
+    
+}
+.record .one-of {
+    
+    display: flex;
+    
+}
+.record .one-of label .content {
+    
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    display: block;
+    transition: 0.3s;
+    margin: 5px 10px;
+}
+.record .one-of label svg {
+    
+    fill: silver;
+    
+}
+.record .one-of label:hover .content,
+.record .one-of label input:checked + .content {
+    
+    padding: 0;
+    
+}
+.record .one-of .one-of-option-- input:checked + .content {
+    
+    padding: 10px;
+    
+}
+.record .one-of .one-of-option--:hover input:checked + .content {
+    
+    padding: 0;
+    
+}
+.record .one-of .one-of-option-down input:checked + .content svg {
+    
+    fill: #A45454;
+    
+}
+.record .one-of .one-of-option-up input:checked + .content svg {
+    
+    fill: #549454;
+    
+}
+.record .one-of input[type=radio],
+.record .scoring .score-result {
+    
+    display: none;
+    
+}
+.record .scoring .score-diff span {
+    
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1.25rem;
+    text-align: center;
+    border-radius: 0 1rem 0 1rem;
+    
+}
+.record .scoring .score-diff .up::before {
+    
+    content: "+";
+}
+.record .scoring .score-diff .down::before {
+    
+    content: "-";
+    
+}
+.record .scoring table {
+    
+    border-spacing: 0;
+    margin-bottom: 1rem;
+    
+}
+.record .scoring td {
+    
+    border: solid 1px white;
+    
+}
+.record button {
+    
+    padding: var(--small-pad);
+    min-width: 200px;
+    
+}
+.record button + button {
+    
+    margin-left: 10px;
+    
+}

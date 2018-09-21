@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Teams from "../components/nodes/Teams";
 import { fetchTeams, selectTeam } from "../actions/teams";
-import { buildTeamsNav } from "../logic/nav";
 
 class TeamsContainer extends Component {
     
@@ -37,7 +36,6 @@ const mapStateToProps = ( { teams, storage } ) => ( {
     
     ...teams,
     unselected: teams.teams && teams.teams.filter( x => x.id !== ( teams.selected || {} ).id ),
-    nav: buildTeamsNav( teams ),
     selectedFolder: storage.context && storage.context.selectedFolder
     
 } );

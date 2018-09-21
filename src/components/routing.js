@@ -70,11 +70,9 @@ const mapRoute = props => ( route, { prefix = "" } ) => {
     const text = `${prefix}${linkRoute.name}`;
     const disabled = !isAuthorized( route, props );
     let to = route;
-    if ( !disabled && props && props.teams && props.teams.selected ) {
-        
-        to = to.replace( /:teamid/g, props.teams.selected.id );
-        
-    }
+    const teamid = ( props && props.teams && props.teams.selected && props.teams.selected.id ) || "?";
+    to = to.replace( /:teamid/g, teamid );
+    to = to.replace( /:when/g, ( new Date() ).toISOString().substring( 0, 10 ) );
     return <Link disabled={disabled} key={ route } to={ to } name={ linkRoute.name }>
         
         {text}
@@ -224,8 +222,9 @@ export class Router extends Component {
         }
         try {
 
-            const ViewComponent = route( locationView(), this.props );
-            return <ViewComponent nav={ nav } />;
+            const routing = route( locationView(), this.props );
+            const ViewComponent = routing.component;
+            return <ViewComponent nav={ nav } params={routing.params} />;
             
         } catch( ex ) {
             

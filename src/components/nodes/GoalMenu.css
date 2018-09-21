@@ -1,0 +1,209 @@
+.menu .choices {
+    
+    width: 900px;
+    
+}
+.menu .choice-content {
+    
+    padding: 1rem;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    
+}
+.menu .choice > input[type=radio] {
+    
+    display: none;
+    
+}
+.menu button {
+    
+    padding: var(--small-pad);
+    min-width: 200px;
+    
+}
+.menu button + button {
+    
+    margin-left: 10px;
+    
+}
+.menu .choice:not(.editing) .choice-content {
+    
+    border-radius: 5px;
+    border: solid 1px silver;
+    min-height: 185px;
+    height: 185px;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    
+}
+.menu .choice:not(.editing) + .choice:not(.editing) .choice-content {
+    
+    margin-top: -125px;
+    
+}
+.menu .choice:not(.editing):hover + .choice:not(.editing) .choice-content {
+    
+    margin-top: 10px;
+    
+}
+.menu .choice:not(.editing) .choice-content:hover,
+.menu .choice:not(.editing) input:checked + .choice-content {
+    
+    box-shadow: 0 0 30px -10px black;
+    cursor: pointer;
+    height: auto;
+    
+}
+.menu .choice:not(.editing) .choice-content {
+    
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.menu .choice:not(.editing) .choice-content span {
+    
+    padding: 0;
+    
+}
+.menu .choice:not(.editing) .choice-content .goal {
+    
+    line-height: 2rem;
+    font-size: 1.25rem;
+    flex: 1;
+    margin-bottom: 0.5rem;
+    
+}
+.menu .choice:not(.editing) .choice-content .goal::before {
+    
+    content: counter(choice);
+    border-radius: 2rem;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    margin-right: 1rem;
+    display: inline-block;
+    background-color: #F7F7F7;
+    
+}
+.menu .choice:not(.editing) .choice-content .rationale {
+    
+    flex-basis: auto;
+    width: 100%;
+    line-height: 1.5;
+    max-height: 3rem;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+    
+}
+.menu .choice:not(.editing) .choice-content:hover .rationale,
+.menu .choice:not(.editing) input:checked + .choice-content .rationale {
+ 
+     max-height: 10rem;
+     
+}
+.menu .choice:not(.editing) .score {
+    
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1.25rem;
+    text-align: center;
+    border-radius: 0 1rem 0 1rem;
+    font-weight: light;
+    
+}
+.menu .choice:not(.editing) .score.false {
+    
+    display: none;
+
+}
+.menu .choice:not(.editing) .upScore {
+    
+    background: linear-gradient(to bottom right, white, #CFC);
+    margin-right: 1rem;
+    color: #070;
+    
+}
+.menu .choice:not(.editing) .upScore::before {
+    
+    content: "+";
+    
+}
+.menu .choice:not(.editing) .downScore {
+    
+    background: linear-gradient(to bottom right, white, #FCC);
+    color: #700;
+    
+}
+.menu .choice:not(.editing) .downScore::before {
+    
+    content: "-";
+    
+}
+.menu .choice:not(.editing) .measurement {
+    
+    flex: 1;
+    line-height: 3rem;
+    
+}
+.menu .choice:not(.editing) .measurement::before {
+    
+    content: "Measurement: ";
+    
+}
+.menu .choice:not(.editing) .actions {
+    
+    display: none;
+    
+}
+
+.menu .choice .choice-content label {
+    
+    display: flex;
+    
+}
+.menu .choice .choice-content span,
+.menu .choice .choice-content input,
+.menu .choice .choice-content textarea {
+    
+    padding: 0.5rem;
+    
+}
+.menu .choice .choice-content span {
+    
+    width: 150px;
+    
+}
+.menu .choice .choice-content input,
+.menu .choice .choice-content textarea {
+    
+    border: none;
+    border-bottom: solid 0.1px silver;
+    margin-left: 10px;
+    width: 40rem;
+
+}
+.menu .choice .choice-content textarea {
+    
+    height: 6rem;
+    line-height: 1.5;
+    
+}
+.menu .choice .choice-content input[type=number] {
+    
+    width: 4rem;
+    
+}
+.menu .choices {
+    
+    counter-reset: choice;
+    
+}
+.menu .choices .choice {
+    
+    counter-increment: choice;
+    
+}

@@ -25,6 +25,7 @@
     
     padding: var(--small-pad);
     background-color: #EEE;
+    max-width: 150px;
     
 }
 .storage .provider-chooser .providers button:hover {

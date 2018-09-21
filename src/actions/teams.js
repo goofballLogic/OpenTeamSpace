@@ -7,9 +7,9 @@ export const FETCH_TEAM_DETAILS =           `${ns}.FETCH_TEAM_DETAILS`;
 export const FETCH_TEAM_DETAILS_DATA =      `${FETCH_TEAM_DETAILS}.DATA`;
 export const FETCH_TEAM_DETAILS_ERROR =     `${FETCH_TEAM_DETAILS}.ERROR`;
 export const UPDATE_TEAM_PROFILES =         `${ns}.UPDATE_TEAM_PROFILES`;
-export const SAVE_TEAM_DETAILS =           `${ns}.SAVE_TEAM_DETAILS`;
-export const SAVE_TEAM_DETAILS_DONE =      `${SAVE_TEAM_DETAILS}.DONE`;
-export const SAVE_TEAM_DETAILS_ERROR =     `${SAVE_TEAM_DETAILS}.ERROR`;
+export const SAVE_TEAM_DETAILS =            `${ns}.SAVE_TEAM_DETAILS`;
+export const SAVE_TEAM_DETAILS_DONE =       `${SAVE_TEAM_DETAILS}.DONE`;
+export const SAVE_TEAM_DETAILS_ERROR =      `${SAVE_TEAM_DETAILS}.ERROR`;
 
 export const fetchTeamsError = err => ( { type: FETCH_TEAMS_ERROR, payload: err } );
 
@@ -19,12 +19,7 @@ export const fetchTeamsData = data => ( { type: FETCH_TEAMS_DATA, payload: { dat
 
 export const selectTeam = id => ( { type: SELECT_TEAM, payload: { id } } );
 
-export const fetchTeamDetails = ( selected, selectedFolder ) => ( {
-    
-    type: FETCH_TEAM_DETAILS,
-    payload: { selected, selectedFolder }
-    
-} );
+export const fetchTeamDetails = () => ( { type: FETCH_TEAM_DETAILS } );
 
 export const fetchTeamDetailsData = data => ( { type: FETCH_TEAM_DETAILS_DATA, payload: { data } } );
 

@@ -3,6 +3,7 @@ import Goals from "../components/nodes/Goals";
 import { connect } from "react-redux";
 import shortid from "shortid";
 import { saveGoal, saveAllGoals, fetchTeamGoals } from "../actions/goals";
+import template from "../logic/goals-template";
 
 class StatefulGoals extends Component {
     
@@ -68,7 +69,9 @@ class StatefulGoals extends Component {
             chosen={this.state.chosen}
             onSave={this.handleSave.bind( this )}
             onChange={this.handleChange.bind( this )}
-            onAdd={this.handleAdd.bind( this )} />;
+            onAdd={this.handleAdd.bind( this )}
+            template={template}
+            />;
         
     }
     
@@ -79,7 +82,7 @@ const mapStateToProps = ( { goals } ) => ( {
     items: goals.items || [],
     isDirty: goals.isDirty,
     isLoading: !!goals.loading,
-    isLoaded: !!goals.loaded
+    isLoaded: !!goals.loaded,
     
 } );
 

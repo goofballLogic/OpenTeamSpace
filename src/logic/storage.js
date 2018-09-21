@@ -89,17 +89,23 @@ export async function ensureContainerFolder( parent, provider, spec ) {
 
 async function ensureIndex( folder, provider, description ) {
     
+    return ensureFile( folder, provider, INDEX_FILENAME, () => buildIndex( description ) );
 
-    let index = await provider.downloadParsedJSON( folder, INDEX_FILENAME );
-    if ( !index ) {
+}
+
+async function ensureFile( folder, provider, filename, buildDefaultValue ) {
     
-        index = buildIndex( description );
-        await provider.uploadAsJSON( folder, INDEX_FILENAME, index );
+    let existing = await provider.downloadParsedJSON( folder, filename );
+    if ( !existing ) {
+        
+        existing = buildDefaultValue();
+        await provider.uploadAsJSON( folder, filename, existing );
         
     }
-    return index;
+    return existing;
     
 }
+
 export async function fetchContainerIndex( parent, provider, spec ) {
     
     const containerFolder = await ensureContainerFolder( parent, provider, spec );
@@ -109,11 +115,28 @@ export async function fetchContainerIndex( parent, provider, spec ) {
 
 export async function patchContainerIndex( parent, provider, spec, props ) {
     
+    return patchFile( parent, provider, spec, INDEX_FILENAME, INDEX_FILENAME, props, () => buildIndex( "Container for " + spec.type ) );
+    // const containerFolder = await ensureContainerFolder( parent, provider, spec );
+    // const existingProps = await ensureFile( containerFolder, provider, INDEX_FILENAME,  );
+    // const index = { ...existingProps, ...props };
+    // await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
+    // return index;
+    
+}
+
+export async function loadFile( parent, provider, spec, filename ) {
+    
     const containerFolder = await ensureContainerFolder( parent, provider, spec );
-    const existingProps = await ensureIndex( containerFolder, provider, "Container for " + spec.type );
-    const index = { ...existingProps, ...props };
-    await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
-    return index;
+    return await provider.downloadParsedJSON( containerFolder, filename );
+    
+}
+export async function patchFile( parent, provider, spec, filename, props, emptyFileBuilder = () => ({}) ) {
+    
+    const containerFolder = await ensureContainerFolder( parent, provider, spec );
+    const existing = await ensureFile( containerFolder, provider, filename, emptyFileBuilder );
+    const patched = { ...existing, ...props };
+    await provider.uploadAsJSON( containerFolder, filename, patched );
+    return patched;
     
 }
 

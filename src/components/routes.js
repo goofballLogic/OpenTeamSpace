@@ -18,13 +18,13 @@ export const TEAMS = "/teams";
 export const CREATE_TEAM = "/teams/create";
 export const EDIT_TEAM = "/teams/:teamid";
 export const PROGRESS = "/teams/:teamid/progress";
-const PROGRESS_PATTERN = /^\/teams\/[^/]*\/progress$/;
+const PROGRESS_PATTERN = /^\/teams\/([^/]*)\/progress$/;
 export const USERS = "/teams/:teamid/progress/users";
-const USERS_PATTERN = /^\/teams\/[^/]*\/progress\/users$/;
-export const RECORD = "/teams/:teamid/progress/create";
-const RECORD_PATTERN = /^\/teams\/[^/]*\/progress\/create$/;
+const USERS_PATTERN = /^\/teams\/([^/]*)\/progress\/users$/;
+export const RECORD = "/teams/:teamid/progress/create/:when";
+const RECORD_PATTERN = /^\/teams\/([^/]*)\/progress\/create\/(\d{4}-\d{2}-\d{2})$/;
 export const GOALS = "/teams/:teamid/progress/create/goals";
-const GOALS_PATTERN = /^\/teams\/[^/]*\/progress\/create\/goals$/;
+const GOALS_PATTERN = /^\/teams\/([^/]*)\/progress\/create\/goals$/;
 
 export const SELF_TEST = "/self-test";
 
@@ -121,7 +121,7 @@ const map = {
     [ PROGRESS ]: {
 
         name: "View progress",
-        match: route => PROGRESS_PATTERN.test( route ),
+        match: route => PROGRESS_PATTERN.exec( route ),
         component: Progress,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ TEAMS ],
@@ -132,7 +132,7 @@ const map = {
     [ USERS ]: {
 
         name: "Edit team users",
-        match: route => USERS_PATTERN.test( route ),
+        match: route => USERS_PATTERN.exec( route ),
         component: Users,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS, RECORD ],
@@ -141,7 +141,7 @@ const map = {
     [ RECORD ]: {
 
         name: "Record an assessment",
-        match: route => RECORD_PATTERN.test( route ),
+        match: route => RECORD_PATTERN.exec( route ),
         component: Record,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS ],
@@ -152,7 +152,7 @@ const map = {
     [ GOALS ]: {
 
         name: "Goals",
-        match: route => GOALS_PATTERN.test( route ),
+        match: route => GOALS_PATTERN.exec( route ),
         component: Goals,
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ PROGRESS, RECORD ]
@@ -196,23 +196,37 @@ export function isAuthorized( route, props ) {
     
 }
 
-export const matchRoute = 
-
-    route => 
+export function matchRoute( route ) {
     
-        map[ route ] 
-        || Object.values( map ).find( routing => routing.match && routing.match( route ) )
-        || UnmatchedRouting;
+    if ( map[ route ] ) return map[ route ];
+    for( var routing of Object.values( map ).filter( r => r.match ) ) {
+        
+        var matched = routing.match( route );
+        if ( matched ) {
+            
+            return {
+                
+                ...routing,
+                params: matched.slice( 1 )
+                
+            };
+            
+        }
+        
+    }
+    return UnmatchedRouting;
+    
+}
 
 export default function findComponent( route, props ) {
 
     const routing = matchRoute( route );
-    const component = routing.component;
-    if ( !component ) { throw new Error( `Route has no component: ${route}` ); }
+    const RouteComponent = routing.component;
+    if ( !RouteComponent ) { throw new Error( `Route has no component: ${route}` ); }
     const rules = routing.authorize || [];
     const denied = findUnauthorized( rules, route, props );
     return denied
-        ? () => <AccessDenied {...denied} />
-        : component;
+        ? { ...routing, component: () => <AccessDenied {...denied} /> }
+        : routing;
 
 }
