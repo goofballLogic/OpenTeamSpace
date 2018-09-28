@@ -34,7 +34,7 @@ class App extends Component {
                 
                     <Link className="home" to={ HOME }>
                     
-                        <img src="./logo-small-transparent.png" alt="home logo" />
+                        <img src="logo-small-transparent.png" alt="home logo" />
                     
                     </Link>
                     <StorageStatus />

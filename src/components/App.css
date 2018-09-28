@@ -98,6 +98,7 @@
     
     flex: 1;
     display: flex;
+    overflow-x: hidden;
     
 }
 .app .body .side-bar {
@@ -112,5 +113,7 @@
 .app .body .side-bar + * {
     
     flex: 1;
+    overflow-x: hidden;
+    padding: 10px;
     
 }
