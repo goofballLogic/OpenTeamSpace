@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import Router from "../containers/Router";
 import { Link } from "./routing";
 import { SELF_TEST, HOME, matchRoute } from "./routes";
+
+import Router from "../containers/Router";
 import Nav from "../containers/Nav";
 import StorageStatus from "../containers/StorageStatus";
-import "./App.css";
-
-import { hot } from 'react-hot-loader'
+import CurrentTeam from "../containers/CurrentTeam";
 
 import { Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+
+import "./App.css";
 
 class App extends Component {
     
@@ -39,8 +40,17 @@ class App extends Component {
                     <StorageStatus />
     
                 </header>
-                <Nav {...this.props} />
-                <Router {...this.props} />
+                <div className="body">
+
+                    <div className="side-bar">
+                    
+                        <Nav {...this.props} />
+                        <CurrentTeam />
+                        
+                    </div>
+                    <Router {...this.props} />
+                    
+                </div>
                 <Link className="self-test" to={ SELF_TEST }>{ matchRoute( SELF_TEST ).name }</Link>
                 
             </div>

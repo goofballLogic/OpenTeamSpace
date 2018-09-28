@@ -1,8 +1,6 @@
 .app {
 
     padding: var(--pad);
-    padding-top: calc(var(--top) + var(--pad));
-    padding-left: calc(var(--left) + var(--pad));
     min-height: 100vh;
     display: flex;
     overflow-x: hidden;
@@ -94,5 +92,25 @@
 .app .toast .toast-progress {
     
     background: linear-gradient( to left, white, #92c9ff );
+    
+}
+.app .body {
+    
+    flex: 1;
+    display: flex;
+    
+}
+.app .body .side-bar {
+    
+    flex-basis: auto;
+    width: 400px;
+    margin-right: var(--pad);
+    display: flex;
+    flex-direction: column;
+    
+}
+.app .body .side-bar + * {
+    
+    flex: 1;
     
 }

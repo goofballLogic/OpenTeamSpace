@@ -3,6 +3,9 @@ import {
     FETCH_TEAM_GOALS, fetchTeamGoalsDone, fetchTeamGoalsError
 } from "../actions/goals";
 import { listContainers, patchContainerIndex, fetchContainerIndex } from "../logic/storage";
+import {
+    fetchTeamDetails
+} from "../actions/teams";
 
 async function saveGoals( store, provider ) {
     
@@ -23,7 +26,6 @@ async function saveGoals( store, provider ) {
     const { items } = goals;
     await patchContainerIndex( connected, provider, teamFolderSpec, { goals: items } );
     
-    //await uploadContainerItem( connected, provider, teamFolderSpec, "goals.json", { items } );
 }
 
 async function loadGoals( store, provider ) {
@@ -59,7 +61,9 @@ const goals = store => next => action => {
                 saveGoals( store, provider )
                     .then( saveAllGoalsDone )
                     .catch( err => saveAllGoalsError( err.stack ? err.stack : err ) )
-                    .then( next );
+                    .then( next )
+                    .then( fetchTeamDetails )
+                    .then( store.dispatch );
                     
             }
             break;

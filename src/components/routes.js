@@ -84,7 +84,7 @@ const map = {
 
         name: "Home",
         component: Home,
-        forward: [ STORAGE, TEAMS ],
+        forward: [ STORAGE, TEAMS, PROGRESS ],
 
     },
     [ STORAGE ]: {

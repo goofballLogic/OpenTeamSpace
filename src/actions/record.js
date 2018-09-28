@@ -1,4 +1,4 @@
-export const ns = "/src/actions/record";
+export const ns =           "/src/actions/record";
 export const SAVE =         `${ns}.SAVE`;
 export const SAVE_DONE =    `${SAVE}.DONE`;
 export const SAVE_ERROR =   `${SAVE}.ERROR`;

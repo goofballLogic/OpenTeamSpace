@@ -3,10 +3,13 @@ import storage from "./storage";
 import createTeam from "./create-team";
 import teams from "./teams";
 import goals from "./goals";
-import { combineReducers } from "redux";
 import record from "./record";
+import metrics from "./metrics";
 
-const wrapped = combineReducers( { testing, storage, createTeam, teams, goals, record } );
+import { combineReducers } from "redux";
+
+
+const wrapped = combineReducers( { testing, storage, createTeam, teams, goals, record, metrics } );
 
 const rootReducer = ( state = {}, action ) => {
     

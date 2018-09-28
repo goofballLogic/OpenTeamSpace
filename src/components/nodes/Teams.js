@@ -1,8 +1,8 @@
 import React from "react";
 import MaybeLoading from "../MaybeLoading";
-import { Link, FromLink } from "../routing";
+import { Link } from "../routing";
 import { CREATE_TEAM } from "../routes";
-import Team, { TeamButton } from "./Team";
+import { TeamButton } from "./Team";
 
 import "./Teams.css";
 
@@ -12,14 +12,8 @@ const Teams =
  
         <MaybeLoading className="teams" loading={ loading }>
 
-            {selected && <div>
-            
-                <FromLink props={ this.props } />
-                <h2>Selected team</h2>
-                <Team {...selected} />
-                
-            </div>}
-            <h2>Teams</h2>
+            {selected && <p>You have selected team {selected.name}. You can see the selected team under the navigation menu on the left hand side of the screen.</p>}
+            <h2>Other teams</h2>
             { ( unselected && unselected.length )
             
                 ? <form>

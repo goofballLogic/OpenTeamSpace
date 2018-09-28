@@ -22,11 +22,20 @@ const ANIMATE_DURATION = 1;
 
 function nav( href, name ) {
 
+    href = viewUrl( href );
     history.pushState( null, null, href );
     linkEventListener.emit( "link" );
     document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
     
 }
+
+const viewUrl =
+
+    url =>
+        
+        ( !url || url.indexOf( "?view=" ) === 0 )
+            ? url
+            : `?view=${url}`;
 
 export class Link extends Component {
     
@@ -40,7 +49,7 @@ export class Link extends Component {
     renderEnabledLink() {
         
         const { name, to, from, className, children } = this.props;
-        const href = `${to}${from ? `&from=${from}` : ""}`;
+        const href = viewUrl( `${to}${from ? `&from=${from}` : ""}` );
         const linkClassName = `routing-link ${className || ""}`;
         const clickHandler = e => this.handleClick( e, name, href );
         return <a onClick={clickHandler} href={href} className={linkClassName}>{children}</a>;
@@ -75,7 +84,7 @@ const routeTo =
             to = to.replace( /:teamid/g, teamid );
             const when = values.when || ( new Date() ).toISOString().substring( 0, 10 );
             to = to.replace( /:when/g, when );
-            return `?view=${to}`;
+            return `${to}`;
             
         };
 

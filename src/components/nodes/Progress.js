@@ -1,16 +1,26 @@
 import React from "react";
-import Team from "./Team";
+import MaybeLoading from "../MaybeLoading";
 
 import "./Progress.css";
 
 const Progress = 
 
-    ( { selected } ) =>
+    ( { selected, metrics, isMetricsLoading } ) =>
     
-        <article className="progress">
+        <MaybeLoading className="progress" loading={isMetricsLoading} text="Loading...">
 
-            <Team {...selected} />
-        
-        </article>;
+            Hello there this is progress
+            <pre>
+            
+                {JSON.stringify( selected, null, 3 )}
+            
+            </pre>
+            <pre>
+            
+                {JSON.stringify( metrics, null, 3 )}
+                
+            </pre>
+            
+        </MaybeLoading>;
         
 export default Progress;

@@ -8,7 +8,7 @@ class Home extends Component {
         return <article className={`home ${className || ""}`}>
 
             <div className="splash">
-                <video src="./Very-Open-Space.mp4" autoPlay loop poster="./Very-Open-Space.jpg"></video>
+                <video src="./Very-Open-Space.mp4" controls autoPlay loop poster="./Very-Open-Space.jpg"></video>
             </div>
             <h1>Welcome to OpenTeamSpace for Developers</h1>
             <p>

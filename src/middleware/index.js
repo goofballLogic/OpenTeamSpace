@@ -6,6 +6,7 @@ import loadTeamDetails from "./load-team-details";
 import saveTeamDetails from "./save-team-details";
 import saveScores from "./save-scores";
 import loadScores from "./load-scores";
+import loadMetrics from "./load-metrics";
 import goals from "./goals";
 import errors from "./errors";
 
@@ -13,7 +14,7 @@ export default [
     
     tempProvider, // send in a provider to all other middleware
     validateStorage,
-    listTeams, createTeam, loadTeamDetails, saveTeamDetails, saveScores, loadScores, goals, // normal middleware
+    listTeams, createTeam, saveTeamDetails, saveScores, loadScores, goals, loadTeamDetails, loadMetrics,
     errors  // catch any error messages
 
 ];

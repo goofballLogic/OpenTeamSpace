@@ -9,11 +9,8 @@ html {
   min-height: 100%;
   --pad: 110px;
   --half-pad: 45px;
-  --top: 0px;
-  --menu: 370px;
-  --left: calc(var(--menu) + var(--pad));
-  --primary-color: #333;
   --small-pad: 15px;
+  --primary-color: #333;
   --backing-color: #EEE;
 
 }

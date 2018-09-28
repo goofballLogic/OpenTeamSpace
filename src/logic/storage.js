@@ -115,7 +115,7 @@ export async function fetchContainerIndex( parent, provider, spec ) {
 
 export async function patchContainerIndex( parent, provider, spec, props ) {
     
-    return patchFile( parent, provider, spec, INDEX_FILENAME, INDEX_FILENAME, props, () => buildIndex( "Container for " + spec.type ) );
+    return patchFile( parent, provider, spec, INDEX_FILENAME, props, () => buildIndex( "Container for " + spec.type ) );
     // const containerFolder = await ensureContainerFolder( parent, provider, spec );
     // const existingProps = await ensureFile( containerFolder, provider, INDEX_FILENAME,  );
     // const index = { ...existingProps, ...props };

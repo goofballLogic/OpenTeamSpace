@@ -13,12 +13,14 @@ const defaultGoals = {
 };
 
 function isDirty( state ) {
-    
+
+    if ( !state.items && state.originalItems ) return true;
+    if ( state.items && !state.originalItems ) return true;
     return JSON.stringify( state.items ) !== JSON.stringify( state.originalItems );
     
 }
 
-function includingItem( items, item ) {
+function includingItem( items = [], item ) {
     
     items = items.map( x => x.id === item.id ? item : x );
     return items.includes( item ) ? items : [ ...items, item ];
@@ -30,7 +32,7 @@ function resettingDirtiness( state ) {
     return {
         
         ...state,
-        originalItems: JSON.parse( JSON.stringify( state.items ) )
+        originalItems: state.items ? JSON.parse( JSON.stringify( state.items ) ) : state.items
         
     };
         
