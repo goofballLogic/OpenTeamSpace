@@ -14,7 +14,7 @@
     "shortid": "^2.2.13"
   },
   "scripts": {
-    "bpp": "npm-run-all build push publish",
+    "bpp": "npm-run-all vup extract-version build push publish",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
@@ -24,7 +24,9 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject",
     "publish": "./scripts/publish.sh",
-    "push": "git push"
+    "push": "git push",
+    "vup": "npm version minor",
+    "extract-version": "node ./build/extract-version"
   },
   "devDependencies": {
     "eventemitter3": "^3.1.0",

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import meta from "./meta.json";
 
 import middlewarez from "./middleware/index";
 
@@ -13,7 +14,6 @@ import registerServiceWorker from "./registerServiceWorker";
 import reducers from "./reducers/index";
 
 const initialState = {};
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancers = composeEnhancers( applyMiddleware( thunk, ...middlewarez ) );
@@ -32,6 +32,7 @@ const Element = () => <Provider store={store}>
     
 </Provider>;
 
+document.querySelector( ".version" ).textContent = meta.version;
 
 ReactDOM.render( 
     
