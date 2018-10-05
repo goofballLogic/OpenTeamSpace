@@ -24,11 +24,8 @@ const TeamList =
             
         </article>;
 
-const formatTickDate =
-
-    when =>
-    
-        format( when, "MMMM Do YYYY" );
+const formatTickDate = when => format( when, "MMMM Do YYYY" );
+const formatTooltipDate = when => format( when, "dddd, MMMM Do YYYY" );
         
 const Progress = 
 
@@ -44,7 +41,7 @@ const Progress =
     
             <h1>Progress</h1>
             <button onClick={() => onRefresh()} mode="button">Refresh</button>
-            {series && data && <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } minTickGap={ 30 } />}
+            {series && data && <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />}
             {series && data && [
                 
                 <h2 key="detail">Detail</h2>,

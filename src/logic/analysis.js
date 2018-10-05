@@ -45,14 +45,14 @@ export const calculateSeries = memoizing(
 
 const buildScore = 
 
-    ( when, { goal, uid, dir, diff } ) =>
-    
+    ( when, { goal, uid, dir, diff, description } ) =>
+   
         ( { 
                                    
            id: uid,
            when,
            score: +diff,
-           description: `${ goal } (${dir})`,
+           description: `${ description } ${dir === "up" ? "👍" : "👎"}`,
            
        } );
 
@@ -72,3 +72,30 @@ export const calculateData =
     calculateDataLogic        
         
 );
+
+
+const zeroedValues =
+
+    obj =>
+    
+        Object.keys( obj ).reduce( ( result, key ) => ( { ...result, [ key ]: 0 } ), {} );
+        
+const oneDayAgo = when => when - 86400000;
+
+const zeroed =
+
+    datum =>
+    
+        ( { 
+            
+            ...datum, 
+            when: oneDayAgo( datum.when ), 
+            runningTotals: zeroedValues( datum.runningTotals ) 
+
+        } );
+        
+export const withZeros =
+
+    data =>
+    
+        ( data && data.length ) ? [ zeroed( data[ 0 ] ), ...data ] : data;

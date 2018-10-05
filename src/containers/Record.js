@@ -103,13 +103,14 @@ class RecordContainer extends Component {
         const { goal, selectedScores = {} } = working;
         if ( !goal ) return;
         
-        const { id, upScore, downScore } = goal;
+        const { id, upScore, downScore, goal: description } = goal;
         const data = Object.keys( selectedScores )
             .map( uid => [ uid, selectedScores[ uid ] ] )
             .filter( ( [ uid, dir ] ) => dir )
             .map( ( [ uid, dir ] ) => ( { 
                 
                 goal: id,
+                description,
                 uid, 
                 dir, 
                 diff: dir === "up" ? upScore : -1 * downScore 

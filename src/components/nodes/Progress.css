@@ -60,7 +60,7 @@
 }
 .progress table td.down {
     
-    background-color: rgba( 100, 0, 0, 0.1 );
+    background-color: rgba( 255, 0, 0, 0.2 );
     
 }
 .progress table td.significant {
@@ -125,5 +125,41 @@
     
     white-space: pre-wrap;
     margin-right: var(--small-pad);
+    
+}
+.progress .tooltip {
+    
+    background-color: rgba( 255, 255, 255, 0.7 );
+    padding: var(--small-pad);
+    border: solid 1px silver;
+    
+}
+.progress .tooltip .scores {
+    
+    display: flex;
+    width: 250px;
+    margin: 0.5rem 0;
+    
+}
+.progress .tooltip .swatch {
+    
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    
+}
+.progress .tooltip .scores .score-name {
+    
+    flex: 1;
+    line-height: 1rem;
+    
+}
+.progress .tooltip .scores .score-score {
+    
+    flex-basis: auto;
+    width: 2rem;
+    text-align: right;
     
 }

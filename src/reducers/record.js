@@ -4,15 +4,6 @@ import {
 } from "../actions/record";
 import { RESET_CONTEXT } from "../actions/storage";
 
-function mergeScores( current, updates ) {
-
-    const currentScores = current.scores || [];
-    const updatesScores = updates.scores || [];
-    const updatedGoalIds = [ ...new Set( updatesScores.map( x => x.goal ) ) ];
-    return currentScores.filter( x => !updatedGoalIds.includes( x.goal ) ).concat( updatesScores );
-    
-}
-
 export default function( state = {}, action ) {
     
     const { type, payload } = action;

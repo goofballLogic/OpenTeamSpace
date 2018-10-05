@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Progress from "../components/nodes/Progress";
 import { connect } from "react-redux";
 import { load } from "../actions/metrics";
-import { calculateSeries, calculateData } from "../logic/analysis";
+import { calculateSeries, calculateData, withZeros } from "../logic/analysis";
 import { fetchTeamDetails } from "../actions/teams";
 
+        
 class ProgressContainer extends Component {
     
     constructor() {
@@ -96,7 +97,8 @@ class ProgressContainer extends Component {
         const { data } = this.props;
         const { selectedWhens } = this.state;
         const selectableData = data ? data.map( x => ( { ...x, selected: selectedWhens.includes( x.when ) } ) ) : [];
-        return <Progress {...this.props} data={ selectableData } onRefresh={ () => this.refreshData() } onSelectWhen={ this.selectWhen.bind( this ) } />;
+        const zeroedData = withZeros( selectableData );
+        return <Progress {...this.props} data={ zeroedData } onRefresh={ () => this.refreshData() } onSelectWhen={ this.selectWhen.bind( this ) } />;
         
     }
     
