@@ -47,14 +47,20 @@
     font-weight: 300;
     
 }
+.progress table tr:hover {
+    
+    background-color: #EEE;
+    cursor: pointer;
+    
+}
 .progress table td.up {
     
-    background-color: #EFE;
+    background-color: rgba( 0, 255, 0, 0.1 );
     
 }
 .progress table td.down {
     
-    background-color: #FEE;
+    background-color: rgba( 100, 0, 0, 0.1 );
     
 }
 .progress table td.significant {
@@ -62,7 +68,7 @@
     font-weight: 600;
     
 }
-.progress tr.detail td {
+.progress tr.detail:not(.selected) td {
     
     display: none;
     

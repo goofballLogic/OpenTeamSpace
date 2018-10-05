@@ -28,7 +28,7 @@ export default function( state = {}, action ) {
                 current: {
                     
                     ...state.current,
-                    scores: mergeScores( state.current, payload ),
+                    scores: payload.scores,
                     saving: true
                     
                 }

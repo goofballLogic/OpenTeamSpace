@@ -3,6 +3,7 @@ import MaybeLoading from "../MaybeLoading";
 
 import { TimeSeriesGraph, TimeSeriesTable } from "tc2-react-time-series-graph";
 import { ProfileCard } from "tc2-react-simple-teams";
+import format from "date-fns/format";
 
 import "./Progress.css";
 
@@ -22,14 +23,20 @@ const TeamList =
             )}
             
         </article>;
+
+const formatTickDate =
+
+    when =>
     
+        format( when, "MMMM Do YYYY" );
+        
 const Progress = 
 
     ( { 
     
         isMetricsLoading, isTeamDetailsLoading,
         selected, metrics, series, data,
-        onRefresh
+        onRefresh, onSelectWhen
         
     } ) =>
     
@@ -37,11 +44,11 @@ const Progress =
     
             <h1>Progress</h1>
             <button onClick={() => onRefresh()} mode="button">Refresh</button>
-            {series && data && <TimeSeriesGraph series={ series } data={ data } />}
+            {series && data && <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } minTickGap={ 30 } />}
             {series && data && [
                 
                 <h2 key="detail">Detail</h2>,
-                <TimeSeriesTable key="table" series={ series } data={ data } />
+                <TimeSeriesTable key="table" series={ series } data={ data } selectWhen={ onSelectWhen } />
                 
             ]}
             {selected && selected.details && <TeamList {...selected.details} />}

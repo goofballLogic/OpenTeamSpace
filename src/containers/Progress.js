@@ -7,6 +7,13 @@ import { fetchTeamDetails } from "../actions/teams";
 
 class ProgressContainer extends Component {
     
+    constructor() {
+        
+        super();
+        this.state = { selectedWhens: [] };
+        
+    }
+    
     ensureTeamDetails() {
     
         const { 
@@ -50,10 +57,12 @@ class ProgressContainer extends Component {
         } = this.props;
         dispatchFetchTeamDetails( selected, selectedFolder );
         dispatchLoadMetrics();
-        
+
     }
+    
     componentDidMount() {
         
+        this.setState( { selectedWhens: [] } );
         this.ensureMetrics();
         this.ensureTeamDetails();
         
@@ -66,9 +75,28 @@ class ProgressContainer extends Component {
         
     }
     
+    selectWhen( when ) {
+        
+        let { selectedWhens } = this.state;
+        if ( selectedWhens.includes( when ) ) {
+            
+            selectedWhens = selectedWhens.filter( x => x !== when );
+            
+        } else {
+            
+            selectedWhens = [ ...selectedWhens, when ];
+            
+        }
+        this.setState( { selectedWhens } );
+        
+    }
+    
     render() {
         
-        return <Progress {...this.props} onRefresh={ () => this.refreshData() } />;
+        const { data } = this.props;
+        const { selectedWhens } = this.state;
+        const selectableData = data ? data.map( x => ( { ...x, selected: selectedWhens.includes( x.when ) } ) ) : [];
+        return <Progress {...this.props} data={ selectableData } onRefresh={ () => this.refreshData() } onSelectWhen={ this.selectWhen.bind( this ) } />;
         
     }
     
