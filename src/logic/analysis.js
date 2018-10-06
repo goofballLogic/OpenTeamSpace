@@ -62,7 +62,7 @@ const metricsToEvents =
 
         data && Object.keys( data )
             .map( when => data[ when ].map( score => buildScore( when, score ) ) )
-            .reduce( ( all, subset ) => [ ...all, ...subset ] );
+            .reduce( ( all, subset ) => [ ...all, ...subset ], [] );
             
 const calculateDataLogic = ( { data } ) => accumulate( metricsToEvents( data ) );
 
