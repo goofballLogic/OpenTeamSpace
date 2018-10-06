@@ -1,6 +1,6 @@
 import React from "react";
 import MaybeLoading from "../MaybeLoading";
-
+import DateRangeSelect from "./DateRangeSelect";
 import { TimeSeriesGraph, TimeSeriesTable } from "tc2-react-time-series-graph";
 import { ProfileCard } from "tc2-react-simple-teams";
 import format from "date-fns/format";
@@ -33,7 +33,8 @@ const Progress =
     
         isMetricsLoading, isTeamDetailsLoading,
         selected, metrics, series, data,
-        onRefresh, onSelectWhen
+        dateFilter, onDateFilterChange,
+        onRefresh, onSelectWhen, onChange
         
     } ) =>
     
@@ -41,6 +42,7 @@ const Progress =
     
             <h1>Progress</h1>
             <button onClick={() => onRefresh()} mode="button">Refresh</button>
+            <DateRangeSelect onChange={ onDateFilterChange } {...dateFilter} />
             {series && data && <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />}
             {series && data && [
                 

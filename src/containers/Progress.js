@@ -5,7 +5,8 @@ import { load } from "../actions/metrics";
 import { calculateSeries, calculateData, withZeros } from "../logic/analysis";
 import { fetchTeamDetails } from "../actions/teams";
 
-        
+const toDateInputValue = when => new Date( when ).toISOString().substring( 0, 10 );
+
 class ProgressContainer extends Component {
     
     constructor() {
@@ -92,13 +93,79 @@ class ProgressContainer extends Component {
         
     }
     
+    handleDateFilterChange( dateFilterStart, dateFilterEnd ) {
+        
+        this.setState( { 
+            
+            dateFilterStart: Date.parse( dateFilterStart ),
+            dateFilterEnd: Date.parse( dateFilterEnd )
+            
+        } );
+        
+    }
+    
+    buildDateFilter( data = [] ) {
+        
+        const { dateFilterStart, dateFilterEnd } = this.state;
+        const now = Date.now();
+        const minWhen = data.length 
+            ? data.map( x => x.when ).reduce( ( result, x ) => Math.min( result, x ) )
+            : now;
+        const maxWhen = data.length
+            ? data.map( x => x.when ).reduce( ( result, x ) => Math.max( result, x ) )
+            : now;
+        const startValue = toDateInputValue( dateFilterStart || minWhen );
+        const endValue = toDateInputValue( dateFilterEnd || maxWhen );
+        return {
+            
+            start: {
+                
+                value: startValue,
+                min: toDateInputValue( minWhen ),
+                max: endValue
+            
+                
+            },
+            
+            end: {
+                
+                value: endValue,
+                min: startValue,
+                max: toDateInputValue( maxWhen )
+                
+            }
+            
+        };
+        
+    }
+    
+    dateFilter( data, filter ) {
+    
+        const start = filter.start.value;
+        const end = filter.end.value;
+        return data.filter( x => {
+            
+            const whenString = toDateInputValue( x.when );
+            return whenString >= start && whenString <= end;
+            
+        } );
+        
+    }
+    
     render() {
         
         const { data } = this.props;
         const { selectedWhens } = this.state;
         const selectableData = data ? data.map( x => ( { ...x, selected: selectedWhens.includes( x.when ) } ) ) : [];
         const zeroedData = withZeros( selectableData );
-        return <Progress {...this.props} data={ zeroedData } onRefresh={ () => this.refreshData() } onSelectWhen={ this.selectWhen.bind( this ) } />;
+        const dateFilter = this.buildDateFilter( zeroedData );
+        const filteredData = this.dateFilter( zeroedData, dateFilter );
+        return <Progress {...this.props} 
+            data={ filteredData }
+            dateFilter={ dateFilter }
+            onDateFilterChange={ this.handleDateFilterChange.bind( this ) }
+            onRefresh={ () => this.refreshData() } 
+            onSelectWhen={ this.selectWhen.bind( this ) } />;
         
     }
     
