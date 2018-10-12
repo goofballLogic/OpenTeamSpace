@@ -7,6 +7,7 @@ import SelfTest from "./nodes/SelfTest";
 import Storage from "../containers/Storage";
 import AccessDenied from "./nodes/AccessDenied";
 import CreateTeam from "../containers/CreateTeam";
+import EditTeam from "../containers/EditTeam";
 import Progress from "../containers/Progress";
 import Users from "../containers/Users";
 import Record from "../containers/Record";
@@ -17,6 +18,7 @@ export const STORAGE = "/storage";
 export const TEAMS = "/teams";
 export const CREATE_TEAM = "/teams/create";
 export const EDIT_TEAM = "/teams/:teamid";
+const EDIT_TEAM_PATTERN = /^\/teams\/([^/]*)$/;
 export const PROGRESS = "/teams/:teamid/progress";
 const PROGRESS_PATTERN = /^\/teams\/([^/]*)\/progress$/;
 export const USERS = "/teams/:teamid/progress/users";
@@ -100,7 +102,8 @@ const map = {
         component: Teams,
         authorize: [ requireStorageContext ],
         back: [ HOME ],
-        forward: [ CREATE_TEAM, PROGRESS ]
+        forward: [ CREATE_TEAM, PROGRESS, EDIT_TEAM ],
+        secondary: [ GOALS, STORAGE ]
 
     },
     [ CREATE_TEAM ]: {
@@ -114,6 +117,8 @@ const map = {
     [ EDIT_TEAM ]: {
 
         name: "Edit team",
+        component: EditTeam,
+        match: route => EDIT_TEAM_PATTERN.exec( route ),
         authorize: [ requireStorageContext, requireTeamSelection ],
         back: [ TEAMS, RECORD ]
 
@@ -124,7 +129,7 @@ const map = {
         match: route => PROGRESS_PATTERN.exec( route ),
         component: Progress,
         authorize: [ requireStorageContext, requireTeamSelection ],
-        back: [ TEAMS ],
+        back: [ TEAMS, EDIT_TEAM ],
         forward: [ RECORD, USERS ],
         secondary: [ GOALS ]
 

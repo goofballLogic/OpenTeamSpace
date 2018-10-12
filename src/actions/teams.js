@@ -10,6 +10,9 @@ export const UPDATE_TEAM_PROFILES =         `${ns}.UPDATE_TEAM_PROFILES`;
 export const SAVE_TEAM_DETAILS =            `${ns}.SAVE_TEAM_DETAILS`;
 export const SAVE_TEAM_DETAILS_DONE =       `${SAVE_TEAM_DETAILS}.DONE`;
 export const SAVE_TEAM_DETAILS_ERROR =      `${SAVE_TEAM_DETAILS}.ERROR`;
+export const RELOAD_TEAMS =                 `${ns}.RELOAD_TEAMS`;
+export const RELOAD_TEAMS_DONE =            `${RELOAD_TEAMS}.DONE`;
+export const RELOAD_TEAMS_ERROR =           `${RELOAD_TEAMS}.ERROR`;
 
 export const fetchTeamsError = err => ( { type: FETCH_TEAMS_ERROR, payload: err } );
 
@@ -32,3 +35,9 @@ export const saveTeamDetails = () => ( { type: SAVE_TEAM_DETAILS } );
 export const saveTeamDetailsDone = () => ( { type: SAVE_TEAM_DETAILS_DONE } );
 
 export const saveTeamDetailsError = err => ( { type: SAVE_TEAM_DETAILS_ERROR, payload: { ...err, message: err.message, stack: err.stack } } );
+
+export const reloadTeams = () => ( { type: RELOAD_TEAMS } );
+
+export const reloadTeamsDone = () => ( { type: RELOAD_TEAMS_DONE } );
+
+export const reloadTeamsError = err => ( { type: RELOAD_TEAMS_ERROR, payload: { ...err, message: err.message, stack: err.stack } } );

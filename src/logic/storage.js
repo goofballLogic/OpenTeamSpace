@@ -26,19 +26,19 @@ export async function updateAccessRecord( provider, folder ) {
 
 }
 
-const buildIndex = description => ( {
+const buildIndex = () => ( {
         
     owner: APP_ID,
     version: "0.1",
     created: dateString(),
-    description,
+    description: "This is the metadata file for the application",
     id: shortid()
     
 } );
 
 export async function initializeFolder( provider, folder ) {
     
-    const index = buildIndex( "This is the metadata file for the application" );
+    const index = buildIndex();
     await saveIndex( provider, folder, index );
     return index;
     
@@ -87,9 +87,9 @@ export async function ensureContainerFolder( parent, provider, spec ) {
     
 }
 
-async function ensureIndex( folder, provider, description ) {
+async function ensureIndex( folder, provider ) {
     
-    return ensureFile( folder, provider, INDEX_FILENAME, () => buildIndex( description ) );
+    return ensureFile( folder, provider, INDEX_FILENAME, buildIndex );
 
 }
 

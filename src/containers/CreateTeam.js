@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { populate, create } from "../actions/create-team";
+import { populate, create } from "../actions/team";
 import CreateTeam from "../components/nodes/CreateTeam";
 
 const mapStateToProps = ( { createTeam } ) => ( { 

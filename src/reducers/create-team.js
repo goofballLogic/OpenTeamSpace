@@ -1,4 +1,4 @@
-import { POPULATE, CREATE, CREATE_SUCCEEDED, CREATE_FAILED } from "../actions/create-team";
+import { POPULATE, CREATE, CREATE_SUCCEEDED, CREATE_FAILED } from "../actions/team";
 
 import shortid from "shortid";
 

@@ -2,11 +2,11 @@ import { toast } from "react-toastify";
 
 const errors = store => next => action => {
 
-    if ( /\.ERROR$/.test( action.type ) ) {
+    const { type, payload } = action;
+    if ( /\.ERROR$/.test( type ) ) {
     
-        const message = action.payload 
-            ? action.payload.message || action.payload 
-            : "Unknown";
+        const err = payload && ( payload.err || payload );
+        const message = err.message || err || "Unknown";
         console.error( action );
         toast( `An error occurred: ${message}` );
     

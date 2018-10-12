@@ -5,8 +5,12 @@ import {
     UPDATE_TEAM_PROFILES,
     SAVE_TEAM_DETAILS, SAVE_TEAM_DETAILS_DONE, SAVE_TEAM_DETAILS_ERROR
 } from "../actions/teams";
-import { CREATE } from "../actions/create-team";
-import { RESET_CONTEXT } from "../actions/storage";
+import { 
+    CREATE
+} from "../actions/team";
+import {
+    RESET_CONTEXT
+} from "../actions/storage";
 
 export default function( state = {}, action ) {
     
@@ -30,12 +34,15 @@ export default function( state = {}, action ) {
             };
         
         case FETCH_TEAMS_DATA:
+            const previouslySelected = state.selected;
+            const selected = previouslySelected && payload.data.find( team => team.id === previouslySelected.id );
             return {
                 
                 ...state,
                 loading: false,
                 err: undefined,
-                teams: payload.data
+                teams: payload.data,
+                selected
                 
             };
             

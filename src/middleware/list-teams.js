@@ -1,4 +1,6 @@
-import { FETCH_TEAMS, fetchTeamsError, fetchTeamsData } from "../actions/teams";
+import { 
+    FETCH_TEAMS, fetchTeamsError, fetchTeamsData
+} from "../actions/teams";
 import { listContainers } from "../logic/storage";
 
 async function invokeListContainers( store, provider ) {
@@ -18,12 +20,13 @@ const listTeams = store => next => action => {
 
     const { type, provider } = action;
     next( action );
-    if ( type === FETCH_TEAMS ) {
+    switch( type ) {
         
-        invokeListContainers( store, provider )
-            .then( data => fetchTeamsData( data ) )
-            .catch( err => fetchTeamsError( err ) )
-            .then( next );
+        case FETCH_TEAMS:
+            invokeListContainers( store, provider )
+                .then( data => fetchTeamsData( data ) )
+                .catch( err => fetchTeamsError( err ) )
+                .then( next );
 
     }
 

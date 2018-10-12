@@ -1,4 +1,4 @@
-import { CREATE, createSucceeded, createFailed } from "../actions/create-team";
+import { CREATE, createSucceeded, createFailed } from "../actions/team";
 import { addContainer } from "../logic/storage";
 
 const createTeam = store => next => action => {
