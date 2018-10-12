@@ -14,43 +14,57 @@ const TeamList =
         <article className="team-list">
         
             <h1>Meet the team</h1>
-            {profiles.map( 
-        
-                profile =>
+            {profiles.length
             
-                    <ProfileCard key={profile.id} {...profile} />
+                ? profiles.map( profile => <ProfileCard key={profile.id} {...profile} /> )
+                : <p>You've got no team members yet. You should add some!</p>
                 
-            )}
+            }
             
         </article>;
 
 const formatTickDate = when => format( when, "MMMM Do YYYY" );
 const formatTooltipDate = when => format( when, "dddd, MMMM Do YYYY" );
+
+const NoMetrics =
+
+    () =>
+    
+        <section className="no-metrics">
+        
+            <h1>Welcome</h1>
+            <p>Your team has no data to show yet. Once you start recording measurements, they will show up here</p>
+        
+        </section>;
+        
+const Metrics =
+
+    ( { onDateFilterChange, dateFilter, series, data, onSelectWhen } ) =>
+    
+        <section className="metrics">
+        
+            <DateRangeSelect onChange={ onDateFilterChange } {...dateFilter} />
+            <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />}
+            <h2>Detail</h2>
+            <TimeSeriesTable series={ series } data={ data } selectWhen={ onSelectWhen } />
+        
+        </section>;
         
 const Progress = 
 
-    ( { 
+    props =>
     
-        isMetricsLoading, isTeamDetailsLoading,
-        selected, metrics, series, data,
-        dateFilter, onDateFilterChange,
-        onRefresh, onSelectWhen, onChange
-        
-    } ) =>
-    
-        <MaybeLoading className="progress" loading={isMetricsLoading || isTeamDetailsLoading} text="Loading...">
+        <MaybeLoading className="progress" loading={props.isMetricsLoading || props.isTeamDetailsLoading} text="Loading...">
     
             <h1>Progress</h1>
-            <button onClick={() => onRefresh()} mode="button">Refresh</button>
-            <DateRangeSelect onChange={ onDateFilterChange } {...dateFilter} />
-            {series && data && <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />}
-            {series && data && [
-                
-                <h2 key="detail">Detail</h2>,
-                <TimeSeriesTable key="table" series={ series } data={ data } selectWhen={ onSelectWhen } />
-                
-            ]}
-            {selected && selected.details && <TeamList {...selected.details} />}
+            <button onClick={() => props.onRefresh()} mode="button">Refresh</button>
+            {( props.series && props.data )
+                ? <Metrics {...props} />
+                : props.isMetricsLoading
+                    ? null
+                    : <NoMetrics />
+            }
+            {props.selected && props.selected.details && <TeamList {...props.selected.details} />}
 
         </MaybeLoading>;
         
