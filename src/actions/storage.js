@@ -24,7 +24,7 @@ export const resetContext = ( args = {} ) => {
     
 };
 
-export const disconnect = () => ( { type: DISCONNECTED } );
+const disconnect = () => ( { type: DISCONNECTED } );
 
 const connectionStarted = folder => ( { type: CONNECTING, payload: folder } );
 const connectionCompleted = folder => ( { type: CONNECTED, payload: folder } );

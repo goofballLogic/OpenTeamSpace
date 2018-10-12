@@ -16,6 +16,7 @@ async function findAndFetchTeamIndex( store, provider ) {
 
     const teamContainers = await listContainers( connected, provider, "team" );
     const teamContainer = teamContainers.find( spec => spec.id === selected.id );
+    if ( !teamContainer ) throw new Error( "Can't find current team in the selected storage folder" );
     return await fetchContainerIndex( connected, provider, teamContainer );
 
 }

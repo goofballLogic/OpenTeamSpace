@@ -1,13 +1,19 @@
 import { LOAD, LOAD_DONE, LOAD_ERROR } from "../actions/metrics";
 import { RESET_CONTEXT } from "../actions/storage";
+import { SELECT_TEAM } from "../actions/teams";
 
-export default function( state = {}, action ) {
+const defaultState = {};
+
+export default function( state = defaultState, action ) {
     
     const { type, payload } = action;
     switch( type ) {
         
+        case SELECT_TEAM:
+            return defaultState;
+            
         case RESET_CONTEXT:
-            return {};
+            return defaultState;
             
         case LOAD:
             return {

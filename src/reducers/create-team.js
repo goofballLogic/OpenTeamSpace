@@ -1,4 +1,5 @@
 import { POPULATE, CREATE, CREATE_SUCCEEDED, CREATE_FAILED } from "../actions/create-team";
+
 import shortid from "shortid";
 
 const ensureId = 

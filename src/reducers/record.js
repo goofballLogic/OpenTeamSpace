@@ -2,15 +2,29 @@ import {
     SAVE, SAVE_DONE, SAVE_ERROR,
     LOAD, LOAD_DONE, LOAD_ERROR
 } from "../actions/record";
-import { RESET_CONTEXT } from "../actions/storage";
+import { 
+    
+    RESET_CONTEXT
+    
+} from "../actions/storage";
+import {
+    
+    SELECT_TEAM
+    
+} from "../actions/teams";
 
-export default function( state = {}, action ) {
+const defaultState = {};
+export default function( state = defaultState, action ) {
     
     const { type, payload } = action;
     switch( type ) {
         
+        case SELECT_TEAM:
+            return defaultState;
+            
         case RESET_CONTEXT:
-            return {};
+            return defaultState;
+            
         case SAVE:
             if ( !state.current ) return state;
             return {

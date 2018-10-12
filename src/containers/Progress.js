@@ -21,15 +21,12 @@ class ProgressContainer extends Component {
         const { 
             
             selectedFolder, selected,
-            isTeamDetailsLoaded, isTeamDetailsLoading, 
+            teamDetailsErr, isTeamDetailsLoaded, isTeamDetailsLoading, 
             dispatchFetchTeamDetails
             
         } = this.props;
-        if ( !( isTeamDetailsLoaded || isTeamDetailsLoading ) ) {
-            
-            dispatchFetchTeamDetails( selected, selectedFolder );
-            
-        }
+        if ( teamDetailsErr || isTeamDetailsLoaded || isTeamDetailsLoading ) return;
+        dispatchFetchTeamDetails( selected, selectedFolder );
         
     }
     
@@ -37,15 +34,13 @@ class ProgressContainer extends Component {
         
         const { 
             
-            isMetricsLoaded, isMetricsLoading,
+            metricsErr, isMetricsLoaded, isMetricsLoading,
             dispatchLoadMetrics
             
         } = this.props;
-        if ( ! ( isMetricsLoaded || isMetricsLoading ) ) {
-            
-            dispatchLoadMetrics();
-            
-        }
+        
+        if (metricsErr || isMetricsLoaded || isMetricsLoading ) return;
+        dispatchLoadMetrics();
 
     }
     
@@ -176,10 +171,12 @@ const mapStateToProps = ( { teams, metrics = {} } ) => ( {
     selected: teams.selected,
     isTeamDetailsLoaded: teams.selected && teams.selected.details,
     isTeamDetailsLoading: teams.selected && teams.selected.loading,
+    teamDetailsErr: teams.selected && teams.selected.err,
     
     metrics: metrics.data,
     isMetricsLoading: metrics.loading,
     isMetricsLoaded: !!metrics.data,
+    metricsErr: metrics.err,
     
     series: teams.selected && teams.selected.details && calculateSeries( teams.selected.details.profiles ),
     data: metrics.data && calculateData( metrics ),

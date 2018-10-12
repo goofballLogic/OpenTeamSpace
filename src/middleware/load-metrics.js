@@ -25,7 +25,7 @@ async function loadMetrics( when, store, provider ) {
     
     const folders = await listContainers( connected, provider, "team" );
     const teamFolderSpec = folders.find( spec => spec.id === selected.id );
-    if ( !teamFolderSpec ) throw new Error( "Team not found in repository index" );
+    if ( !teamFolderSpec ) throw new Error( "Can't find current team in the selected storage folder" );
     
     const fileFilter = file => file.mimeType === "application/json" && /^\d{4}\.json/.test( file.name );
     const dataFiles = await loadDataFiles( connected, provider, teamFolderSpec, fileFilter );

@@ -3,7 +3,11 @@ import {
     SAVE_ALL_GOALS, SAVE_ALL_GOALS_DONE, SAVE_ALL_GOALS_ERROR,
     FETCH_TEAM_GOALS, FETCH_TEAM_GOALS_DONE, FETCH_TEAM_GOALS_ERROR
 } from "../actions/goals";
-
+import {
+    
+    SELECT_TEAM
+    
+} from "../actions/teams";
 const defaultGoals = {
     
     items: [],
@@ -43,6 +47,8 @@ function wrapped( state, action ) {
     const { type, payload } = action;
     switch( type ) {
         
+        case SELECT_TEAM:
+            return defaultGoals;
         case SAVE_GOAL:
             return {
                 
