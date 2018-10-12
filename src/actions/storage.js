@@ -36,38 +36,44 @@ const connectionAbandoned = reason => dispatch => {
 
 };
 
+function handleConnectionErrors( dispatch, err, message = "Unable to connect" ) {
+    
+    const apiError = () => err.result && err.result.error && err.result.error.message;
+    const diagnostic = ( err && ( apiError() || err.message ) ) || "Unspecified error";
+    dispatch( connectionAbandoned( `${message}: ${diagnostic}.` ) );
+    
+}
 
 export const connect = ( provider, folder ) => async dispatch => {
 
     // let the user know that we are connecting
     dispatch( connectionStarted( folder ) );
-    let index = await fetchIndex( provider, folder );
-    if ( index && !isCurrentApplication( index ) ) {
-        
-        // the folder already contains a file called _index.json so we can't use it. Possibly a sibling application.
-        dispatch( connectionAbandoned( `Sorry, that folder is being used by something else (${index.owner || "Unknown"}).` ) );
-        return;
-        
-    }
-    if ( !index ) {
-        
-        // need to initialize the folder for use with this application
-        try {
+    try {
 
+        let index = await fetchIndex( provider, folder );
+        if ( index && !isCurrentApplication( index ) ) {
+        
+            // the folder already contains a file called _index.json so we can't use it. Possibly a sibling application.
+            throw new Error( `Sorry, that folder is being used by something else (${index.owner || "Unknown"}).` );
+            
+        }
+        if ( !index ) {
+        
+            // need to initialize the folder for use with this application
             index = await initializeFolder( provider, folder );
             dispatch( connectionCompleted( folder ) );
             
-        } catch( ex ) {
-            
-            dispatch( connectionAbandoned( `An error occurred initializing the folder: ${ex.message}.` ) );
-            return;
-            
         }
 
+    } catch( err ) {
+        
+        handleConnectionErrors( dispatch, err );
+        return;
+
     }
-    
+
     // update access record
-    updateAccessRecord( provider, folder );
+    await updateAccessRecord( provider, folder );
     
     // connection is successful
     dispatch( connectionCompleted( folder ) );
