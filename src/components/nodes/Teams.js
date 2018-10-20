@@ -9,9 +9,10 @@ import "./Teams.css";
 const Teams = 
 
     ( { loading, teams = [], selectTeam, selected, unselected } ) => 
- 
+
         <MaybeLoading className="teams" loading={ loading }>
 
+            {(undefined).hello()}
             {selected && <p>You have selected team {selected.name}. You can see the selected team under the navigation menu on the left hand side of the screen.</p>}
             <h2>Other teams</h2>
             { ( unselected && unselected.length )

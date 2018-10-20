@@ -24,6 +24,7 @@ function nav( href, name ) {
 
     href = viewUrl( href );
     history.pushState( null, null, href );
+console.log( "Emitting event link" );
     linkEventListener.emit( "link" );
     document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
     
@@ -136,6 +137,7 @@ export class Nav extends Component {
 
     render() {
 
+console.log( "Rendering Nav" );
         const { url, className = "" } = this.props;
         const map = selectMap( url );
         const { back = [], forward = [], secondary = [] } = map;
@@ -178,6 +180,7 @@ export class Router extends Component {
 
     listener() {
 
+        this.setState( { error: undefined } );
         if( this.animating ) {
 
             clearTimeout( this.animating );
