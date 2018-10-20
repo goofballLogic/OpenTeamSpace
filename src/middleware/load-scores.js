@@ -13,7 +13,6 @@ async function loadScores( store, provider ) {
     const { selected } = teams || {};
     if ( !selected ) throw new Error( "No team selected" );
 
-console.log( "Record", record );
     const { current } = record;
     if ( !current ) throw new Error( "No scores to load" );
     
@@ -26,8 +25,7 @@ console.log( "Record", record );
     const teamFolderSpec = folders.find( spec => spec.id === selected.id );
     
     const loaded = await loadFile( connected, provider, teamFolderSpec, filename );
-console.log( loaded );
-console.log( when );
+
     return { 
         
         when, 

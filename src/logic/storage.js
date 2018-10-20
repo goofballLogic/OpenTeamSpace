@@ -44,7 +44,7 @@ export async function initializeFolder( provider, folder ) {
     
 }
 
-const buildContainerName = ( { type, name, id } ) => id;
+const buildContainerName = ( { id } ) => id;
 
 export async function addContainer( parent, provider, spec ) {
     
@@ -65,6 +65,8 @@ export async function addContainer( parent, provider, spec ) {
 
 }
 
+const creatingIndex = {};
+
 export async function ensureContainerFolder( parent, provider, spec ) {
     
     if ( !parent ) throw new Error( "Argument not supplied: parent" );
@@ -72,8 +74,12 @@ export async function ensureContainerFolder( parent, provider, spec ) {
     const folderName = buildContainerName( spec );
     let folderSpec = parent.list.find( x => x.name === folderName );
     if ( !folderSpec ) {
-        
-        await addContainer( parent, provider, spec );
+    
+        const key = `${parent.current.id}=>${buildContainerName( spec )}`;
+        const promised = creatingIndex[ key ] || addContainer( parent, provider, spec );
+        creatingIndex[ key ] = promised;
+        folderSpec = await promised;
+        delete creatingIndex[ key ];
         await provider.refresh( parent );
         folderSpec = parent.list.find( x => x.name === folderName );
 
