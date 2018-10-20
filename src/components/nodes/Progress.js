@@ -44,7 +44,7 @@ const Metrics =
         <section className="metrics">
         
             <DateRangeSelect onChange={ onDateFilterChange } {...dateFilter} />
-            <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />}
+            <TimeSeriesGraph series={ series } data={ data } formatTickDate={ formatTickDate } formatTooltipDate={ formatTooltipDate } minTickGap={ 30 } />
             <h2>Detail</h2>
             <TimeSeriesTable series={ series } data={ data } selectWhen={ onSelectWhen } />
         

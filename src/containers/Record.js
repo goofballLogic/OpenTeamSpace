@@ -118,7 +118,7 @@ class RecordContainer extends Component {
             } ) );
             
         dispatchSave( when, data );
-        this.handleCancelScores();
+        this.setState
 
     }
     
@@ -152,6 +152,7 @@ const mapStateToProps = ( { teams = {}, goals = {}, storage = {}, record = {} },
     isTeamLoaded: !!( teams.selected && teams.selected.details ),
     isRecordLoading: record.current && record.current.loading,
     isRecordLoaded: !!( record.current && record.current.when === params[ 1 ] ),
+    
     when: params && params[ 1 ],
     scores: record.current && record.current.scores,
     people: ( teams.selected && teams.selected.details && teams.selected.details.profiles ) || [],
