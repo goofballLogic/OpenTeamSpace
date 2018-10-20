@@ -85,12 +85,14 @@ const oneDayAgo = when => when - 86400000;
 const zeroed =
 
     datum =>
-    
+
         ( { 
             
             ...datum, 
             when: oneDayAgo( datum.when ), 
-            runningTotals: zeroedValues( datum.runningTotals ) 
+            runningTotals: zeroedValues( datum.runningTotals ),
+            events: [],
+            selected: undefined
 
         } );
         
