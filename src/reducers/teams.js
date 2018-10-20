@@ -11,7 +11,6 @@ import {
 import {
     RESET_CONTEXT
 } from "../actions/storage";
-
 export default function( state = {}, action ) {
     
     const { type, payload } = action;
@@ -24,7 +23,7 @@ export default function( state = {}, action ) {
                 teams: undefined
                 
             };
-            
+        
         case FETCH_TEAMS:
             return {
                 

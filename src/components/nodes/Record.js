@@ -4,7 +4,20 @@ import "./Record.css";
 import format from "date-fns/format";
 import GoalMenu from "./GoalMenu";
 import { Scoring } from "tc2-react-good-bad-tracker";
+import { GOALS } from "../routes";
+import { Link } from "../routing"; 
 
+
+const NoGoals =
+
+    () =>
+    
+        <div>
+            
+            <p>No goals found. You can create some: <Link to={ GOALS }>Set some goals</Link></p>
+                
+        </div>;
+        
 const Record = 
 
     ( {
@@ -27,6 +40,7 @@ const Record =
                 <input type="date" value={when} onChange={ onChangeDate } />
                 
             </label>
+            { !( isTeamLoading || isRecordLoading ) && ( !goals.length ) && <NoGoals /> }
             <GoalMenu items={goals} chosen={working.goal} template={template} onChange={onChangeGoal} />
             {working.scoringTarget && <section className="scoring">
                 <Scoring target={working.scoringTarget} 
