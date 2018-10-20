@@ -38,6 +38,9 @@
     align-self: center;
     padding: calc(2 * var(--small-pad));
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 .team .logo img {

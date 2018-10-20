@@ -27,7 +27,10 @@ const listTeams = store => next => action => {
                 .then( data => fetchTeamsData( data ) )
                 .catch( err => fetchTeamsError( err ) )
                 .then( next );
-
+            break;
+            
+        default:
+            // nada
     }
 
 };

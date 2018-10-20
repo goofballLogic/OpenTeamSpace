@@ -44,7 +44,7 @@ export async function initializeFolder( provider, folder ) {
     
 }
 
-const buildContainerName = ( { type, name, id } ) => `${type}: ${name} (${id})`;
+const buildContainerName = ( { type, name, id } ) => id;
 
 export async function addContainer( parent, provider, spec ) {
     
@@ -116,11 +116,6 @@ export async function fetchContainerIndex( parent, provider, spec ) {
 export async function patchContainerIndex( parent, provider, spec, props ) {
     
     return patchFile( parent, provider, spec, INDEX_FILENAME, props, () => buildIndex( "Container for " + spec.type ) );
-    // const containerFolder = await ensureContainerFolder( parent, provider, spec );
-    // const existingProps = await ensureFile( containerFolder, provider, INDEX_FILENAME,  );
-    // const index = { ...existingProps, ...props };
-    // await provider.uploadAsJSON( containerFolder, INDEX_FILENAME, index );
-    // return index;
     
 }
 
