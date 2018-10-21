@@ -49,8 +49,8 @@
 }
 .menu .choice:not(.editing) .choice-content:hover,
 .menu .choice:not(.editing) input:checked + .choice-content {
-    
-    box-shadow: 0 0 30px -10px black;
+
+    box-shadow: 0 0 2px 2px silver;
     cursor: pointer;
     height: auto;
     
