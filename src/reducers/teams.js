@@ -6,7 +6,8 @@ import {
     SAVE_TEAM_DETAILS, SAVE_TEAM_DETAILS_DONE, SAVE_TEAM_DETAILS_ERROR
 } from "../actions/teams";
 import { 
-    CREATE
+    CREATE,
+    SAVE, SAVE_SUCCEEDED, SAVE_FAILED
 } from "../actions/team";
 import {
     RESET_CONTEXT
@@ -58,6 +59,21 @@ export default function( state = {}, action ) {
                 
                 ...state,
                 selected: state.teams.find( x => x.id === payload.id )
+                
+            };
+        case SAVE:
+            return {
+                
+                ...state,
+                selected: { ...state.selected, saving: true }
+                
+            };
+        case SAVE_SUCCEEDED:
+        case SAVE_FAILED:
+            return {
+                
+                ...state,
+                selected: { ...state.selected, saving: false }
                 
             };
         case RESET_CONTEXT:

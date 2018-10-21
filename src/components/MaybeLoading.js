@@ -2,19 +2,20 @@ import React from "react";
 
 import "./MaybeLoading.css";
 
-const Loading =
+const Processing =
 
     ( { text } ) =>
     
-        <div className="loading">{text}</div>;
+        <div className="processing">{text}</div>;
         
 const MaybeLoading =
     
-    ( { loading, text = "Loading...", className, children } ) => 
+    ( { loading, text = "Loading...", saving, savingText = "Saving...", className, children } ) => 
     
         <section className={`${className} maybe-loading`}>
     
-            {loading && <Loading text={text} />}
+            {loading && <Processing text={text} />}
+            {saving && <Processing text={savingText} />}
             {children}
             
         </section>;

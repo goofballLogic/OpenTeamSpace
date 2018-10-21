@@ -4,7 +4,7 @@
     width: 100%;
     
 }
-.maybe-loading .loading {
+.maybe-loading .processing {
     
     position: absolute;
     top: -10px;
@@ -26,7 +26,7 @@
     
 }
 .folder-list-loading::before,
-.maybe-loading .loading::before {
+.maybe-loading .processing::before {
     
     content: " ";
     display: block;

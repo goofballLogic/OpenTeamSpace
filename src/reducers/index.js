@@ -20,8 +20,8 @@ const rootReducer = ( state = {}, action ) => {
     if ( type === DISCONNECTED || type === RESET_CONTEXT ) 
         return justStorage( state, action );
     else
-        return wrapped( state, action );    
-    
+        return wrapped( state, action );
+
 };
 
 export default rootReducer;
