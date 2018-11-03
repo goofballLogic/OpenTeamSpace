@@ -1,5 +1,29 @@
-import { CREATE, createSucceeded, createFailed } from "../actions/team";
+import { CREATE, createSucceeded, CREATE_SUCCEEDED, createFailed, CREATE_FAILED } from "../actions/team";
+import { fetchTeams, FETCH_TEAMS_DATA, FETCH_TEAMS_ERROR, SELECT_TEAM } from "../actions/teams";
 import { addContainer } from "../logic/storage";
+import { selectTeam } from "../actions/teams";
+import { nav, expand } from "../components/routing";
+import { PROGRESS } from "../components/routes";
+import { enqueue } from "../actions/queues";
+
+const afterCreate = id => [ 
+                    
+    { 
+        after: CREATE_SUCCEEDED,
+        then: () => fetchTeams(),
+        abortOn: CREATE_FAILED
+    },
+    {
+        after: FETCH_TEAMS_DATA,
+        then: () => selectTeam( id ),
+        abortOn: FETCH_TEAMS_ERROR
+    },
+    {
+        after: SELECT_TEAM,
+        then: () => nav( expand( PROGRESS, { teamid: id } ), "Team progress" )
+    }
+
+];
 
 const createTeam = store => next => action => {
 
@@ -25,6 +49,7 @@ const createTeam = store => next => action => {
                 // update index with a reference to the team file
                 await addContainer( connected, provider, { type: "team", id, name, logo } );
                 provider.refresh( connected );
+                next( enqueue( afterCreate( id ) ) );
                 next( createSucceeded() );
                 
             } catch( ex ) {

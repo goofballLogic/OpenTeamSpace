@@ -15,5 +15,3 @@ const mapDispatchToProps = ( dispatch, { nav } ) => ( {
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( CreateTeam );
-
-if ( module.hot ) module.hot.accept();

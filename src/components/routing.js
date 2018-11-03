@@ -20,7 +20,16 @@ const selectMap = url => matchRoute( locationView( url ) );
 
 const ANIMATE_DURATION = 1;
 
-function nav( href, name ) {
+const viewUrl =
+
+    url =>
+        
+        ( !url || url.indexOf( "?view=" ) === 0 ) 
+        
+            ? url 
+            : `?view=${url}`;
+            
+export function nav( href, name ) {
 
     href = viewUrl( href );
     history.pushState( null, null, href );
@@ -28,14 +37,6 @@ function nav( href, name ) {
     document.dispatchEvent( new CustomEvent( "after-navigation", { detail: { name } } ) );
     
 }
-
-const viewUrl =
-
-    url =>
-        
-        ( !url || url.indexOf( "?view=" ) === 0 )
-            ? url
-            : `?view=${url}`;
 
 export class Link extends Component {
     
@@ -73,18 +74,28 @@ export class Link extends Component {
     
 }
 
+export const expand =
+
+    ( route, values ) => {
+        
+        let to = route;
+        const teamid = values.teamid || "?";
+        to = to.replace( /:teamid/g, teamid );
+        const when = values.when || ( new Date() ).toISOString().substring( 0, 10 );
+        to = to.replace( /:when/g, when );
+        return `${to}`;
+
+    };
+    
 const routeTo = 
 
     props =>
 
-        ( route, values = {} ) => {
+        ( route, values ) => {
         
-            let to = route;
-            const teamid = values.teamid || ( props && props.teams && props.teams.selected && props.teams.selected.id ) || "?";
-            to = to.replace( /:teamid/g, teamid );
-            const when = values.when || ( new Date() ).toISOString().substring( 0, 10 );
-            to = to.replace( /:when/g, when );
-            return `${to}`;
+            values = values || {};
+            values.teamid = values.teamid || ( props && props.teams && props.teams.selected && props.teams.selected.id );
+            return expand( route, values );
             
         };
 

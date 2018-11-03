@@ -58,7 +58,7 @@ export default function( state = {}, action ) {
             return {
                 
                 ...state,
-                selected: state.teams.find( x => x.id === payload.id )
+                selected: state.teams && state.teams.find( x => x.id === payload.id )
                 
             };
         case SAVE:

@@ -47,7 +47,7 @@ function requireStorageContext( route, props ) {
 
 function requireTeamSelection( route, props ) {
     
-    const { selected } = props.teams;
+    const { selected } = props.teams || {};
     if ( !selected ) {
         
         return {
