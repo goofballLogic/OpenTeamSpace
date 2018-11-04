@@ -22,6 +22,7 @@ const Home =
             
                 <h2>Getting started</h2>
                 <p>In order to create or load a team, you need to select a place to store your data.</p>
+                <p><b>N.B.</b> If you use Google Drive storage, you will need to allow popups when your browser alerts you.</p>
                 <button onClick={ onCloseGettingStarted }>OK</button>
                 <button onClick={ onDismissGettingStarted }>Don't show again</button>
 
