@@ -1,7 +1,7 @@
 /*global URL*/
 import React from "react";
 
-import Home from "./nodes/Home";
+import Home from "../containers/Home";
 import Teams from "../containers/Teams";
 import SelfTest from "./nodes/SelfTest";
 import Storage from "../containers/Storage";

@@ -1,23 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Home.css";
-class Home extends Component {
+
+const Home = 
+
+    ( { className, showGettingStarted, onCloseGettingStarted, onDismissGettingStarted, storageContext } ) => 
     
-    render() {
-        
-        const { className } = this.props;
-        return <article className={`home ${className || ""}`}>
+        <article className={`home ${className || ""}`}>
 
             <div className="splash">
+
                 <video src="./Very-Open-Space.mp4" controls autoPlay loop poster="./Very-Open-Space.jpg"></video>
+
             </div>
             <h1>Welcome to OpenTeamSpace for Developers</h1>
             <p>
+
                 This tool is intended to help with self-reflection and evaluation. If there's anything we can do to make the experience more seamless, please let us know.
+
             </p>
-        
+            { showGettingStarted && <dialog id="getting-started" ref={x => showGettingStarted( storageContext, x )}>
+            
+                <h2>Getting started</h2>
+                <p>In order to create or load a team, you need to select a place to store your data.</p>
+                <button onClick={ onCloseGettingStarted }>OK</button>
+                <button onClick={ onDismissGettingStarted }>Don't show again</button>
+
+            </dialog>}
+
         </article>;
-        
-    }
-    
-}
+
 export default Home;

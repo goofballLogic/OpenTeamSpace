@@ -5,3 +5,29 @@
     margin-bottom: var(--half-pad);
     
 }
+#getting-started {
+    
+    border: solid 1px black;
+    padding: 50px;
+    position: relative;
+    width: 800px;
+    
+}
+dialog h2 {
+    
+    margin: 0;
+    margin-bottom: 20px;
+    
+}
+#getting-started button {
+
+    margin-top: 50px;
+    float: right;
+    min-width: 100px;
+    
+}
+#getting-started button + button {
+    
+    margin-right: 10px;
+    
+}
