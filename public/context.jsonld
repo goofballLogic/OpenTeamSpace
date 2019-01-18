@@ -1,5 +1,5 @@
 {
-  "@context": {
+  
     "@version": 1.1,
     
     "@vocab": "http://taxonomy.openteamspace.com#",
@@ -14,5 +14,5 @@
     "familyName": "so:familyName",
     "givenName": "so:givenName",
     "jobTitle": "so:jobTitle",
-  }
+  
 }
