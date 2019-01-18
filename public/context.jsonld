@@ -1,12 +1,18 @@
 {
   "@context": {
-    "ots": "http://taxonomy.openteamspace.com#",
-    "@vocab": "http://schema.org/",
-    "members": {
-      "@container": "@set"
-    },
+    "@version": 1.1,
+    
+    "@vocab": "http://taxonomy.openteamspace.com#",
+    "so": "http://schema.org/",
+
+    "Team": "ots:Team",
+    "members": "ots:members",
     "name": "ots:name",
     "color": "ots:color",
-    "Team": "ots:Team"
+    
+    "Person": "so:Person",
+    "familyName": "so:familyName",
+    "givenName": "so:givenName",
+    "jobTitle": "so:jobTitle",
   }
 }
