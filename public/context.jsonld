@@ -6,6 +6,7 @@
       "@container": "@set"
     },
     "name": "ots:name",
-    "color": "ots:color"
+    "color": "ots:color",
+    "team": "ots:team"
   }
 }
