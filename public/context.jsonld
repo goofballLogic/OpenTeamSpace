@@ -1,17 +1,11 @@
 {
-  "@context": "./context.jsonld",
-  "@type": "ots:Team",
-  "logo": "http://app.openteamspace.com/img/triangular.png",
-  "members": [
-    {
-      "1547415662840_p5dfxwnsz": {
-        "@type": "Person",
-        "familyName": "Gibson",
-        "givenName": "Andrew",
-        "jobTitle": "Principal Engineer"
-      }
-    }
-  ],
-  "color": "#FF0044",
-  "name": "The pretenders"
+  "@context": {
+    "ots": "http://taxonomy.openteamspace.com#",
+    "@vocab": "http://schema.org/",
+    "members": {
+      "@container": "@set"
+    },
+    "name": "ots:name",
+    "color": "ots:color"
+  }
 }
